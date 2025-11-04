@@ -1,13 +1,16 @@
 <img src="../images/logo.png" height="200" align="center" alt="WUJI TECH Logo">
 
-WUJI TECH, founded in 2019, is a young and innovative team pushing the limits of robotic end-effector performance. We develop dexterous hands with high degrees of freedom, human-like precision, and industrial-grade reliability. Our products enable complex multi-finger manipulation and are widely adopted in embodied intelligence, research, and specialized services. Our mission is to empower robots with agile, reliable hardware—bringing human-level manipulation to embodied systems.
+Wuji Technology develops and manufactures high-DOF general-purpose dexterous hand. Our mission is to accelerate progress of dexterous manipulation and embodied AI.  
+
+Join us (yes, we hire internationally): <hr@wuji.tech>  
+Purchase or partnering with us: <sales@wuji.tech>  
+Technical support: <support@wuji.tech>
 
 [![Website](https://img.shields.io/badge/Website-4285F4?style=flat&logo=google-chrome&logoColor=white)](https://wuji.tech/)
 [![Doc](https://img.shields.io/badge/Docs-008000?style=flat&logo=readthedocs&logoColor=white)](https://docs.wuji.tech/)
 [![X](https://img.shields.io/badge/X-000000?logo=x&logoColor=white)](https://x.com/wuji_global)
 [![YouTube](https://img.shields.io/badge/YouTube-ff0000?style=flat&logo=youtube&logoColor=white)](https://youtube.com/@WUJI_TECH)
 [![Bilibili](https://img.shields.io/badge/-bilibili-ff69b4?style=flat&labelColor=ff69b4&logo=bilibili&logoColor=white)](https://space.bilibili.com/3546938664291159)
-[![Email](https://img.shields.io/badge/-Email-c14438?style=flat&logo=Gmail&logoColor=white)](mailto:support@wuji.tech)
 
 <table><tbody>
 
