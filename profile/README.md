@@ -2,9 +2,9 @@
 
 Wuji Technology develops and manufactures high-DOF general-purpose dexterous hand. Our mission is to accelerate progress of dexterous manipulation and embodied AI.  
 
-Join us (yes, we hire internationally): hr@wuji.tech 
-Purchase or partnering with us: sales@wuji.tech
-Technical support: support@wuji.tech
+Join us (yes, we hire internationally): <hr@wuji.tech>
+Purchase or partnering with us: <sales@wuji.tech>
+Technical support: <support@wuji.tech>
 
 [![Website](https://img.shields.io/badge/Website-4285F4?style=flat&logo=google-chrome&logoColor=white)](https://wuji.tech/)
 [![Doc](https://img.shields.io/badge/Docs-008000?style=flat&logo=readthedocs&logoColor=white)](https://docs.wuji.tech/)
