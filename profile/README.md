@@ -36,7 +36,7 @@ Technical support: <support@wuji.tech>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/Wuji-Technology-Co-Ltd/wujihandcpp?style=flat-square"/></td>
     </tr>
     <tr>
-        <td colspan="1" rowspan="2" align="center" > Simulation </td>
+        <td colspan="1" rowspan="3" align="center" > Simulation </td>
         <td><a href="https://github.com/Wuji-Technology-Co-Ltd/mujoco-sim" target="_blank"> mujoco-sim </a> <br> A minimal demo for loading and controlling the WujiHand model in the MuJoCo simulator. </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/Wuji-Technology-Co-Ltd/mujoco-sim?style=flat-square"/></td>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/Wuji-Technology-Co-Ltd/mujoco-sim?style=flat-square"/></td>
@@ -45,6 +45,11 @@ Technical support: <support@wuji.tech>
         <td><a href="https://github.com/Wuji-Technology-Co-Ltd/wujihand-urdf" target="_blank"> wujihand-urdf </a> <br> Wuji Hand URDF models and RViz configuration in ROS2. </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/Wuji-Technology-Co-Ltd/wujihand-urdf?style=flat-square"/></td>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/Wuji-Technology-Co-Ltd/wujihand-urdf?style=flat-square"/></td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/Wuji-Technology-Co-Ltd/isaaclab-sim" target="_blank"> isaaclab-sim </a> <br> A minimal demo for loading and controlling the WujiHand model in the IsaacSim simulator. </td>
+        <td><img alt="Stars" src="https://img.shields.io/github/stars/Wuji-Technology-Co-Ltd/isaaclab-sim?style=flat-square"/></td>
+        <td><img alt="Forks" src="https://img.shields.io/github/forks/Wuji-Technology-Co-Ltd/isaaclab-sim?style=flat-square"/></td>
     </tr>
     <tr>
         <td colspan="1" rowspan="2" align="center" class="ai-notebooks-table-points ai-orange-link">
