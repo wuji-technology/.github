@@ -1,7 +1,7 @@
 <img src="../images/logo.png" height="200" align="center" alt="WUJI TECH Logo">
 
 
-**IMPORTANT NOTICE: URDF prior to Nov 9, 2025 was INCORRECT. LENGTH OF PROXIMAL PHALANX WAS OFF BY 7mm! PLEASE CHECK THE LASTEST URDF! **
+**IMPORTANT NOTICE: URDF before Nov 9, 2025 was INCORRECT. LENGTH OF PROXIMAL PHALANX WAS OFF BY 7mm! PLEASE CHECK THE LATEST URDF!**
 
 
 Wuji Technology develops and manufactures high-DOF general-purpose dexterous hand. Our mission is to accelerate progress of dexterous manipulation and embodied AI.  
