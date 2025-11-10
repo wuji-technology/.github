@@ -27,17 +27,12 @@ Technical support: <support@wuji.tech>
     <tbody>
     <tr><th> Title </th> <th>Description</th> <th>Stars</th> <th>Forks</th></tr>
     <tr>
-        <td colspan="1" rowspan="2" align="center" class="ai-notebooks-table-points ai-orange-link">
+        <td colspan="1" rowspan="1" align="center" class="ai-notebooks-table-points ai-orange-link">
             SDK
         </td>
-        <td><a href="https://github.com/Wuji-Technology-Co-Ltd/wujihandpy" target="_blank"> wujihandpy </a> <br> Python bindings for WujiHandCpp. </td>
+        <td><a href="https://github.com/Wuji-Technology-Co-Ltd/wujihandpy" target="_blank"> wujihandpy </a> <br> Unified Wuji Hand SDK: C++ Core with Python Bindings </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/Wuji-Technology-Co-Ltd/wujihandpy?style=flat-square"/></td>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/Wuji-Technology-Co-Ltd/wujihandpy?style=flat-square"/></td>
-    </tr>
-    <tr>
-        <td><a href="https://github.com/Wuji-Technology-Co-Ltd/wujihandcpp" target="_blank"> wujihandcpp</a> <br> A Lightweight C++ SDK for Wujihand. </td>
-        <td><img alt="Stars" src="https://img.shields.io/github/stars/Wuji-Technology-Co-Ltd/wujihandcpp?style=flat-square"/></td>
-        <td><img alt="Forks" src="https://img.shields.io/github/forks/Wuji-Technology-Co-Ltd/wujihandcpp?style=flat-square"/></td>
     </tr>
     <tr>
         <td colspan="1" rowspan="3" align="center" > Simulation </td>
