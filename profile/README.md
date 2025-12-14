@@ -35,10 +35,15 @@ Technical support: <support@wuji.tech>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/Wuji-Technology-Co-Ltd/wujihandpy?style=flat-square"/></td>
     </tr>
     <tr>
-        <td colspan="1" rowspan="2" align="center" > Simulation </td>
+        <td colspan="1" rowspan="3" align="center" > Simulation </td>
         <td><a href="https://github.com/Wuji-Technology-Co-Ltd/wuji_hand_description" target="_blank"> wuji_hand_description </a> <br> This package provides the URDF model, MuJoCo (MJCF) models, and meshes for the Wuji Hand. It also includes configuration files for ROS 2 visualization using RViz. </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/Wuji-Technology-Co-Ltd/wuji_hand_description?style=flat-square"/></td>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/Wuji-Technology-Co-Ltd/wuji_hand_description?style=flat-square"/></td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/Wuji-Technology-Co-Ltd/mujoco-sim" target="_blank"> mujoco-sim </a> <br> A minimal example to load and control the WujiHand in MuJoCo. </td>
+        <td><img alt="Stars" src="https://img.shields.io/github/stars/Wuji-Technology-Co-Ltd/mujoco-sim?style=flat-square"/></td>
+        <td><img alt="Forks" src="https://img.shields.io/github/forks/Wuji-Technology-Co-Ltd/mujoco-sim?style=flat-square"/></td>
     </tr>
     <tr>
         <td><a href="https://github.com/Wuji-Technology-Co-Ltd/isaaclab-sim" target="_blank"> isaaclab-sim </a> <br> A minimal demo for loading and controlling the WujiHand model in the IsaacSim simulator. </td>
