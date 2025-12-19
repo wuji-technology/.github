@@ -27,12 +27,17 @@ Technical support: <support@wuji.tech>
     <tbody>
     <tr><th> Title </th> <th>Description</th> <th>Stars</th> <th>Forks</th></tr>
     <tr>
-        <td colspan="1" rowspan="1" align="center" class="ai-notebooks-table-points ai-orange-link">
+        <td colspan="1" rowspan="2" align="center" class="ai-notebooks-table-points ai-orange-link">
             SDK
         </td>
         <td><a href="https://github.com/Wuji-Technology-Co-Ltd/wujihandpy" target="_blank"> wujihandpy </a> <br> Unified Wuji Hand SDK: C++ Core with Python Bindings </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/Wuji-Technology-Co-Ltd/wujihandpy?style=flat-square"/></td>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/Wuji-Technology-Co-Ltd/wujihandpy?style=flat-square"/></td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/Wuji-Technology-Co-Ltd/wujihandros2" target="_blank"> wujihandros2 </a> <br> ROS2 driver for WujiHand with 1000Hz state publishing, multi-hand support, and visualization (RViz/Foxglove). </td>
+        <td><img alt="Stars" src="https://img.shields.io/github/stars/Wuji-Technology-Co-Ltd/wujihandros2?style=flat-square"/></td>
+        <td><img alt="Forks" src="https://img.shields.io/github/forks/Wuji-Technology-Co-Ltd/wujihandros2?style=flat-square"/></td>
     </tr>
     <tr>
         <td colspan="1" rowspan="3" align="center" > Simulation </td>
@@ -70,12 +75,6 @@ Technical support: <support@wuji.tech>
         <td><a href="https://github.com/Wuji-Technology-Co-Ltd/wuji_retargeting" target="_blank"> wuji_retargeting </a> <br> High-precision hand pose retargeting system using DexRetargeting algorithm. Supports Vision Pro hand tracking input for real-time teleoperation. </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/Wuji-Technology-Co-Ltd/wuji_retargeting?style=flat-square"/></td>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/Wuji-Technology-Co-Ltd/wuji_retargeting?style=flat-square"/></td>
-    </tr>
-    <tr>
-        <td align="center" > ROS2 </td>
-        <td><a href="https://github.com/Wuji-Technology-Co-Ltd/wujihandros2" target="_blank"> wujihandros2 </a> <br> ROS2 driver for WujiHand with 1000Hz state publishing, multi-hand support, and visualization (RViz/Foxglove). </td>
-        <td><img alt="Stars" src="https://img.shields.io/github/stars/Wuji-Technology-Co-Ltd/wujihandros2?style=flat-square"/></td>
-        <td><img alt="Forks" src="https://img.shields.io/github/forks/Wuji-Technology-Co-Ltd/wujihandros2?style=flat-square"/></td>
     </tr>
     <tr>
         <td align="center" > Hardware Info </td>
