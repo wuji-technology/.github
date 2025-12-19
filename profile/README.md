@@ -72,6 +72,12 @@ Technical support: <support@wuji.tech>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/Wuji-Technology-Co-Ltd/wuji_retargeting?style=flat-square"/></td>
     </tr>
     <tr>
+        <td align="center" > ROS2 </td>
+        <td><a href="https://github.com/Wuji-Technology-Co-Ltd/wujihandros2" target="_blank"> wujihandros2 </a> <br> ROS2 driver for WujiHand with 1000Hz state publishing, multi-hand support, and visualization (RViz/Foxglove). </td>
+        <td><img alt="Stars" src="https://img.shields.io/github/stars/Wuji-Technology-Co-Ltd/wujihandros2?style=flat-square"/></td>
+        <td><img alt="Forks" src="https://img.shields.io/github/forks/Wuji-Technology-Co-Ltd/wujihandros2?style=flat-square"/></td>
+    </tr>
+    <tr>
         <td align="center" > Hardware Info </td>
         <td><a href="https://github.com/Wuji-Technology-Co-Ltd/wujihand-hardware-design" target="_blank"> wujihand-hardware-design </a> <br> Repo storing wujihand's hardware design resources. </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/Wuji-Technology-Co-Ltd/wujihand-hardware-design?style=flat-square"/></td>
