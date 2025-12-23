@@ -72,9 +72,9 @@ Technical support: <support@wuji.tech>
         <td colspan="1" rowspan="1" align="center" class="ai-notebooks-table-points ai-orange-link">
             Teleoperation
         </td>
-        <td><a href="https://github.com/wuji-technology/wuji_retargeting" target="_blank"> wuji_retargeting </a> <br> High-precision hand pose retargeting system using DexRetargeting algorithm. Supports Vision Pro hand tracking input for real-time teleoperation. </td>
-        <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/wuji_retargeting?style=flat-square"/></td>
-        <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wuji_retargeting?style=flat-square"/></td>
+        <td><a href="https://github.com/wuji-technology/wuji-retargeting" target="_blank"> wuji-retargeting </a> <br> High-precision hand pose retargeting system using DexRetargeting algorithm. Supports Vision Pro hand tracking input for real-time teleoperation. </td>
+        <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/wuji-retargeting?style=flat-square"/></td>
+        <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wuji-retargeting?style=flat-square"/></td>
     </tr>
     <tr>
         <td align="center" > Hardware Info </td>
