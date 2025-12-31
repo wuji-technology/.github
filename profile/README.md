@@ -59,14 +59,14 @@ Technical support: <support@wuji.tech>
         <td colspan="1" rowspan="2" align="center" class="ai-notebooks-table-points ai-orange-link">
             HMI
         </td>
-        <td><a href="https://github.com/wuji-technology/wujihand-upgrader-hmi" target="_blank"> wujihand-upgrader-hmi</a> <br> Use to upgrade WujiHand devices. </td>
-        <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/wujihand-upgrader-hmi?style=flat-square"/></td>
-        <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wujihand-upgrader-hmi?style=flat-square"/></td>
+        <td><a href="https://github.com/wuji-technology/wujihand-upgrader" target="_blank"> wujihand-upgrader</a> <br> Use to upgrade WujiHand devices. </td>
+        <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/wujihand-upgrader?style=flat-square"/></td>
+        <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wujihand-upgrader?style=flat-square"/></td>
     </tr>
     <tr>
-        <td><a href="https://github.com/wuji-technology/wujihand-qt" target="_blank"> wujihand-qt</a> <br> WujiHand desktop HMI (PyQt + WujiHub). </td>
-        <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/wujihand-qt?style=flat-square"/></td>
-        <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wujihand-qt?style=flat-square"/></td>
+        <td><a href="https://github.com/wuji-technology/wujihand-hmi" target="_blank"> wujihand-hmi</a> <br> WujiHand desktop HMI (PyQt + WujiHub). </td>
+        <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/wujihand-hmi?style=flat-square"/></td>
+        <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wujihand-hmi?style=flat-square"/></td>
     </tr>
     <tr>
         <td colspan="1" rowspan="1" align="center" class="ai-notebooks-table-points ai-orange-link">
