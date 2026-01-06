@@ -66,6 +66,7 @@ def update_readme(descriptions: dict[str, str]) -> int:
 
 
 def main():
+    """Main entry point: fetch descriptions and update README."""
     config = load_config()
     descriptions = {}
 
