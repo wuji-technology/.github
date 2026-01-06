@@ -30,28 +30,28 @@ Technical support: <support@wuji.tech>
         <td colspan="1" rowspan="2" align="center" class="ai-notebooks-table-points ai-orange-link">
             SDK
         </td>
-        <td><a href="https://github.com/wuji-technology/wujihandpy" target="_blank"> wujihandpy </a> <br> Unified Wuji Hand SDK: C++ Core with Python Bindings </td>
+        <td><a href="https://github.com/wuji-technology/wujihandpy" target="_blank"> wujihandpy </a> <br> Unified Wuji Hand SDK: C++ Core with Python Bindings  </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/wujihandpy?style=flat-square"/></td>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wujihandpy?style=flat-square"/></td>
     </tr>
     <tr>
-        <td><a href="https://github.com/wuji-technology/wujihandros2" target="_blank"> wujihandros2 </a> <br> ROS2 driver for WujiHand with 1000Hz state publishing, multi-hand support, and visualization (RViz/Foxglove). </td>
+        <td><a href="https://github.com/wuji-technology/wujihandros2" target="_blank"> wujihandros2 </a> <br>   </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/wujihandros2?style=flat-square"/></td>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wujihandros2?style=flat-square"/></td>
     </tr>
     <tr>
         <td colspan="1" rowspan="3" align="center" > Simulation </td>
-        <td><a href="https://github.com/wuji-technology/wuji-hand-description" target="_blank"> wuji-hand-description </a> <br> This package provides the URDF model, MuJoCo (MJCF) models, and meshes for the Wuji Hand. It also includes configuration files for ROS 2 visualization using RViz. </td>
+        <td><a href="https://github.com/wuji-technology/wuji-hand-description" target="_blank"> wuji-hand-description </a> <br> This package provides the URDF model, MuJoCo (MJCF) models, and meshes for the Wuji Hand. It also includes configuration files for ROS 2 visualization using RViz.  </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/wuji-hand-description?style=flat-square"/></td>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wuji-hand-description?style=flat-square"/></td>
     </tr>
     <tr>
-        <td><a href="https://github.com/wuji-technology/mujoco-sim" target="_blank"> mujoco-sim </a> <br> A minimal example to load and control the WujiHand in MuJoCo. </td>
+        <td><a href="https://github.com/wuji-technology/mujoco-sim" target="_blank"> mujoco-sim </a> <br> WujiHand MuJoCo Demo. A minimal example to load and control the WujiHand in MuJoCo.  </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/mujoco-sim?style=flat-square"/></td>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/mujoco-sim?style=flat-square"/></td>
     </tr>
     <tr>
-        <td><a href="https://github.com/wuji-technology/isaaclab-sim" target="_blank"> isaaclab-sim </a> <br> A minimal demo for loading and controlling the WujiHand model in the IsaacSim simulator. </td>
+        <td><a href="https://github.com/wuji-technology/isaaclab-sim" target="_blank"> isaaclab-sim </a> <br> WujiHand IsaacLab Demo. A minimal example to load and control the WujiHand in IsaacLab.   </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/isaaclab-sim?style=flat-square"/></td>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/isaaclab-sim?style=flat-square"/></td>
     </tr>
@@ -59,12 +59,12 @@ Technical support: <support@wuji.tech>
         <td colspan="1" rowspan="2" align="center" class="ai-notebooks-table-points ai-orange-link">
             HMI
         </td>
-        <td><a href="https://github.com/wuji-technology/wujihand-upgrader" target="_blank"> wujihand-upgrader</a> <br> Use to upgrade WujiHand devices. </td>
+        <td><a href="https://github.com/wuji-technology/wujihand-upgrader" target="_blank"> wujihand-upgrader</a> <br> Use to upgrade wujihand devices  </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/wujihand-upgrader?style=flat-square"/></td>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wujihand-upgrader?style=flat-square"/></td>
     </tr>
     <tr>
-        <td><a href="https://github.com/wuji-technology/wujihand-hmi" target="_blank"> wujihand-hmi</a> <br> WujiHand desktop HMI (PyQt + WujiHub). </td>
+        <td><a href="https://github.com/wuji-technology/wujihand-hmi" target="_blank"> wujihand-hmi</a> <br> Wuji Hand desktop HMI, used for debugging Wuji Hand  </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/wujihand-hmi?style=flat-square"/></td>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wujihand-hmi?style=flat-square"/></td>
     </tr>
@@ -72,19 +72,19 @@ Technical support: <support@wuji.tech>
         <td colspan="1" rowspan="1" align="center" class="ai-notebooks-table-points ai-orange-link">
             Teleoperation
         </td>
-        <td><a href="https://github.com/wuji-technology/wuji-retargeting" target="_blank"> wuji-retargeting </a> <br> High-precision hand pose retargeting system using DexRetargeting algorithm. Supports Vision Pro hand tracking input for real-time teleoperation. </td>
+        <td><a href="https://github.com/wuji-technology/wuji-retargeting" target="_blank"> wuji-retargeting </a> <br> Wuji_retargeting  </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/wuji-retargeting?style=flat-square"/></td>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wuji-retargeting?style=flat-square"/></td>
     </tr>
     <tr>
         <td align="center" > Hardware Info </td>
-        <td><a href="https://github.com/wuji-technology/wujihand-hardware-design" target="_blank"> wujihand-hardware-design </a> <br> Repo storing wujihand's hardware design resources. </td>
+        <td><a href="https://github.com/wuji-technology/wujihand-hardware-design" target="_blank"> wujihand-hardware-design </a> <br> Hardware Design of Wuji Hand. Include CAD files for the hand, wrist adaptors, and soft-body parts.  </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/wujihand-hardware-design?style=flat-square"/></td>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wujihand-hardware-design?style=flat-square"/></td>
     </tr>
     <tr>
         <td align="center" > Learning </td>
-        <td><a href="https://github.com/wuji-technology/robotics-rigid-body-mechanics" target="_blank"> robotics-rigid-body-mechanics </a> <br> Lecture notes on robotics rigid body mechanics: rotation, screw theory, dynamics, and multibody systems. </td>
+        <td><a href="https://github.com/wuji-technology/robotics-rigid-body-mechanics" target="_blank"> robotics-rigid-body-mechanics </a> <br> Lecture notes on robotics rigid body mechanics: rotation, screw theory, dynamics, and multibody systems  </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/robotics-rigid-body-mechanics?style=flat-square"/></td>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/robotics-rigid-body-mechanics?style=flat-square"/></td>
     </tr>
