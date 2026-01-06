@@ -25,7 +25,7 @@ def get_repo_description(repo_name: str) -> str:
     url = f"https://api.github.com/repos/{ORG_NAME}/{repo_name}"
     headers = {"Accept": "application/vnd.github.v3+json"}
     if GITHUB_TOKEN:
-        headers["Authorization"] = f"token {GITHUB_TOKEN}"
+        headers["Authorization"] = f"Bearer {GITHUB_TOKEN}"
 
     response = requests.get(url, headers=headers, timeout=10)
     response.raise_for_status()
@@ -34,11 +34,12 @@ def get_repo_description(repo_name: str) -> str:
     return data.get("description") or ""
 
 
-def update_readme(descriptions: dict[str, str]):
-    """Update README.md with new descriptions."""
+def update_readme(descriptions: dict[str, str]) -> int:
+    """Update README.md with new descriptions. Returns number of replacements made."""
     with open(README_PATH, "r", encoding="utf-8") as f:
         content = f.read()
 
+    replacements_made = 0
     for repo_name, description in descriptions.items():
         # Match pattern: <a href=".../{repo_name}" ...> repo_name </a> <br> OLD_DESCRIPTION </td>
         # Replace OLD_DESCRIPTION with new description
@@ -50,10 +51,18 @@ def update_readme(descriptions: dict[str, str]):
         )
 
         replacement = rf'\g<1>{description} \g<3>'
-        content = re.sub(pattern, replacement, content, flags=re.DOTALL | re.IGNORECASE)
+        new_content, count = re.subn(pattern, replacement, content, flags=re.DOTALL | re.IGNORECASE)
+        if count > 0:
+            content = new_content
+            replacements_made += count
+        else:
+            print(f"  Warning: No match found for {repo_name} in README")
 
+    print(f"\nMade {replacements_made} replacements out of {len(descriptions)} repositories")
     with open(README_PATH, "w", encoding="utf-8") as f:
         f.write(content)
+
+    return replacements_made
 
 
 def main():
