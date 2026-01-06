@@ -18,6 +18,6 @@ categories:
   - name: Hardware Info
     repos:
       - wujihand-hardware-design
-  - name: Learning
+  - name: Lecture Notes
     repos:
       - robotics-rigid-body-mechanics
