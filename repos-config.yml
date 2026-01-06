@@ -1,0 +1,23 @@
+categories:
+  - name: SDK
+    repos:
+      - wujihandpy
+      - wujihandros2
+  - name: Simulation
+    repos:
+      - wuji_hand_description
+      - mujoco-sim
+      - isaaclab-sim
+  - name: HMI
+    repos:
+      - wujihand-upgrader
+      - wujihand-hmi
+  - name: Teleoperation
+    repos:
+      - wuji-retargeting
+  - name: Hardware Info
+    repos:
+      - wujihand-hardware-design
+  - name: Learning
+    repos:
+      - robotics-rigid-body-mechanics
