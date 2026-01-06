@@ -51,6 +51,8 @@ jobs:
             exit 0
           fi
           BRANCH="feature/m-${{ inputs.story_id }}/auto-update-descriptions"
+          # Delete old branch if exists
+          git push origin --delete "$BRANCH" 2>/dev/null || true
           git checkout -b "$BRANCH"
           git commit -m "Auto-update repo descriptions"
           git push -u origin "$BRANCH"
