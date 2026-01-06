@@ -37,7 +37,7 @@ jobs:
             echo "No changes to commit"
             exit 0
           fi
-          BRANCH="auto-update-descriptions-$(date +%Y%m%d-%H%M%S)"
+          BRANCH="feature/auto-update-descriptions-$(date +%Y%m%d-%H%M%S)"
           git checkout -b "$BRANCH"
           git commit -m "Auto-update repo descriptions"
           git push -u origin "$BRANCH"
