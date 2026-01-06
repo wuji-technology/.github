@@ -5,7 +5,7 @@ categories:
       - wujihandros2
   - name: Simulation
     repos:
-      - wuji_hand_description
+      - wuji-hand-description
       - mujoco-sim
       - isaaclab-sim
   - name: HMI
