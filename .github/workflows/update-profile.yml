@@ -1,7 +1,12 @@
 name: Update Profile README
 
 on:
-  workflow_dispatch:  # Manual trigger only
+  workflow_dispatch:
+    inputs:
+      story_id:
+        description: 'Story ID (e.g., 6655348384)'
+        required: true
+        type: string
 
 jobs:
   update:
@@ -37,7 +42,7 @@ jobs:
             echo "No changes to commit"
             exit 0
           fi
-          BRANCH="feature/auto-update-descriptions-$(date +%Y%m%d-%H%M%S)"
+          BRANCH="feature/m-${{ inputs.story_id }}/auto-update-descriptions"
           git checkout -b "$BRANCH"
           git commit -m "Auto-update repo descriptions"
           git push -u origin "$BRANCH"
