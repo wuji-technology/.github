@@ -1,12 +1,7 @@
 name: Update Profile README
 
 on:
-  workflow_dispatch:
-    inputs:
-      story_id:
-        description: 'Story ID (e.g., 6655348384)'
-        required: true
-        type: string
+  workflow_dispatch:  # Manual trigger only
 
 jobs:
   update:
@@ -17,14 +12,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Validate story_id
-        run: |
-          if [[ ! "${{ inputs.story_id }}" =~ ^[0-9]+$ ]]; then
-            echo "Error: story_id must be a numeric value (e.g., 6655348384)"
-            exit 1
-          fi
-          echo "story_id validated: ${{ inputs.story_id }}"
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -50,7 +37,7 @@ jobs:
             echo "No changes to commit"
             exit 0
           fi
-          BRANCH="feature/m-${{ inputs.story_id }}/auto-update-descriptions"
+          BRANCH="docs/update-profile"
           # Delete old branch if exists
           git push origin --delete "$BRANCH" 2>/dev/null || true
           git checkout -b "$BRANCH"
