@@ -74,7 +74,7 @@ Technical support: <support@wuji.tech>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wuji-retargeting?style=flat-square"/></td>
     </tr>
     <tr>
-        <td><a href="https://github.com/wuji-technology/wuji-teleop-ros2" target="_blank"> wuji-teleop-ros2 </a> <br> Ros2 Teleop system: Full teleoperation system with Tianji arm based on Ros2.  </td>
+        <td><a href="https://github.com/wuji-technology/wuji-teleop-ros2" target="_blank"> wuji-teleop-ros2 </a> <br> Ros2 Teleop system: Full teleoperation system with Tianji arm based on ROS2.  </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/wuji-teleop-ros2?style=flat-square"/></td>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wuji-teleop-ros2?style=flat-square"/></td>
     </tr>
