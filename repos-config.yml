@@ -15,6 +15,7 @@ categories:
   - name: Teleoperation
     repos:
       - wuji-retargeting
+      - wuji-teleop-ros2
   - name: Hardware Info
     repos:
       - wujihand-hardware-design
