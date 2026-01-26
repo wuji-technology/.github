@@ -74,6 +74,11 @@ Technical support: <support@wuji.tech>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wuji-retargeting?style=flat-square"/></td>
     </tr>
     <tr>
+        <td><a href="https://github.com/wuji-technology/wuji-teleop-ros2.git" target="_blank"> wuji-teleop-ros2 </a> <br> Ros2 Teleop system: Full teleoperation system with Tianji arm based on Ros2.  </td>
+        <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/wuji-teleop-ros2?style=flat-square"/></td>
+        <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wuji-teleop-ros2?style=flat-square"/></td>
+    </tr>
+    <tr>
         <td align="center" > Hardware Info </td>
         <td><a href="https://github.com/wuji-technology/wujihand-hardware-design" target="_blank"> wujihand-hardware-design </a> <br> Hardware design file repository: adapter mounts, structural frames, and softgoods in STEP format.  </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/wujihand-hardware-design?style=flat-square"/></td>
