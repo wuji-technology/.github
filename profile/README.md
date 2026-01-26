@@ -66,16 +66,13 @@ Technical support: <support@wuji.tech>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wujihand-hmi?style=flat-square"/></td>
     </tr>
     <tr>
-        <td colspan="1" rowspan="1" align="center" class="ai-notebooks-table-points ai-orange-link">
+        <td colspan="1" rowspan="2" align="center" class="ai-notebooks-table-points ai-orange-link">
             Teleoperation
         </td>
         <td><a href="https://github.com/wuji-technology/wuji-retargeting" target="_blank"> wuji-retargeting </a> <br> Hand pose retargeting system: high-precision retargeting system based on DexRetargeting algorithm, supporting Vision Pro hand tracking for real-time teleoperation.  </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/wuji-retargeting?style=flat-square"/></td>
         <td><img alt="Forks" src="https://img.shields.io/github/forks/wuji-technology/wuji-retargeting?style=flat-square"/></td>
     </tr>
-    <td colspan="1" rowspan="1" align="center" class="ai-notebooks-table-points ai-orange-link">
-        Teleoperation
-    </td>
     <tr>
         <td><a href="https://github.com/wuji-technology/wuji-teleop-ros2" target="_blank"> wuji-teleop-ros2 </a> <br> Ros2 Teleop system: Full teleoperation system with Tianji arm based on ROS2.  </td>
         <td><img alt="Stars" src="https://img.shields.io/github/stars/wuji-technology/wuji-teleop-ros2?style=flat-square"/></td>
