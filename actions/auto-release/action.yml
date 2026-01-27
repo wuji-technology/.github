@@ -66,6 +66,13 @@ runs:
 
           // 从 tag 提取版本号（支持预发布版本如 1.0.0-rc4）
           const tag = context.ref.replace('refs/tags/', '');
+
+          // 验证 tag 格式必须以 v 开头
+          if (!tag.startsWith('v')) {
+            core.setFailed(`Invalid tag format: "${tag}". Tag must start with "v" (e.g., v1.0.0, v1.0.0-rc1). This is required for consistent Full Changelog links.`);
+            return;
+          }
+
           const version = tag.replace(/^v/, '');
           console.log(`Processing tag: ${tag}, version: ${version}`);
 
