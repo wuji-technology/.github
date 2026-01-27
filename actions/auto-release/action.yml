@@ -58,6 +58,12 @@ runs:
           const changelog = fs.readFileSync(changelogPath, 'utf8')
             .replace(/\r\n?/g, '\n');
 
+          // 验证触发事件是否为 tag push
+          if (!context.ref.startsWith('refs/tags/')) {
+            core.setFailed(`This action must be triggered by a tag push. Current ref: ${context.ref}`);
+            return;
+          }
+
           // 从 tag 提取版本号（支持预发布版本如 1.0.0-rc4）
           const tag = context.ref.replace('refs/tags/', '');
           const version = tag.replace(/^v/, '');
