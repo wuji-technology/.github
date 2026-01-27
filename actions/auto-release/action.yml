@@ -1,0 +1,85 @@
+name: 'Auto Release from CHANGELOG'
+description: '解析 CHANGELOG.md 并自动创建 GitHub Release'
+author: 'wuji-technology'
+
+inputs:
+  changelog-path:
+    description: 'CHANGELOG 文件路径'
+    required: false
+    default: 'CHANGELOG.md'
+  github-token:
+    description: 'GitHub Token'
+    required: true
+  draft:
+    description: '是否创建草稿 Release'
+    required: false
+    default: 'false'
+  prerelease:
+    description: '是否标记为预发布'
+    required: false
+    default: 'false'
+
+outputs:
+  version:
+    description: '发布的版本号'
+    value: ${{ steps.parse.outputs.version }}
+  release-url:
+    description: 'Release 页面 URL'
+    value: ${{ steps.create-release.outputs.html_url }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Parse CHANGELOG
+      id: parse
+      shell: bash
+      run: |
+        CHANGELOG="${{ inputs.changelog-path }}"
+        VERSION=$(grep -m1 -oP '## \[?\K[0-9]+\.[0-9]+\.[0-9]+' "$CHANGELOG" || echo "")
+        if [ -z "$VERSION" ]; then
+          echo "::error::无法从 CHANGELOG 中解析版本号"
+          exit 1
+        fi
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        BODY=$(awk '/^## \[?'"$VERSION"'/{flag=1; next} /^## \[?[0-9]+\.[0-9]+\.[0-9]+/{flag=0} flag' "$CHANGELOG")
+        {
+          echo "body<<EOF"
+          echo "$BODY"
+          echo "EOF"
+        } >> $GITHUB_OUTPUT
+
+    - name: Check if release exists
+      id: check
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+      run: |
+        VERSION="v${{ steps.parse.outputs.version }}"
+        if gh release view "$VERSION" > /dev/null 2>&1; then
+          echo "exists=true" >> $GITHUB_OUTPUT
+        else
+          echo "exists=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Create Release
+      id: create-release
+      if: steps.check.outputs.exists == 'false'
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+      run: |
+        VERSION="v${{ steps.parse.outputs.version }}"
+        DRAFT_FLAG=""
+        PRERELEASE_FLAG=""
+        if [ "${{ inputs.draft }}" == "true" ]; then
+          DRAFT_FLAG="--draft"
+        fi
+        if [ "${{ inputs.prerelease }}" == "true" ]; then
+          PRERELEASE_FLAG="--prerelease"
+        fi
+        RELEASE_URL=$(gh release create "$VERSION" \
+          --title "$VERSION" \
+          --notes "${{ steps.parse.outputs.body }}" \
+          $DRAFT_FLAG $PRERELEASE_FLAG \
+          2>&1 | tail -1)
+        echo "html_url=$RELEASE_URL" >> $GITHUB_OUTPUT
