@@ -51,6 +51,46 @@ jobs:
 |-----|------|
 | `version` | 发布的版本号 |
 | `release-url` | Release 页面 URL |
+| `body` | 解析后的 Release Notes 内容 |
+| `tag` | Git tag 名称 |
+
+## 高级用法
+
+### 上传 Release Assets
+
+```yaml
+- uses: wuji-technology/.github/actions/auto-release@v1
+  with:
+    github-token: ${{ secrets.GITHUB_TOKEN }}
+
+- name: Upload assets
+  run: gh release upload ${{ github.ref_name }} dist/*.whl dist/*.tar.gz
+  env:
+    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+### 同步到其他仓库
+
+```yaml
+- uses: wuji-technology/.github/actions/auto-release@v1
+  id: release
+  with:
+    github-token: ${{ secrets.GITHUB_TOKEN }}
+
+- name: Sync to public repo
+  uses: actions/github-script@v7
+  with:
+    github-token: ${{ secrets.RELEASE_TOKEN }}
+    script: |
+      await github.rest.repos.createRelease({
+        owner: context.repo.owner,
+        repo: 'public-repo-name',
+        tag_name: '${{ steps.release.outputs.tag }}',
+        name: '${{ steps.release.outputs.tag }}',
+        body: `${{ steps.release.outputs.body }}`,
+        prerelease: true
+      });
+```
 
 ## CHANGELOG 格式要求
 

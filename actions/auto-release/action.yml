@@ -26,6 +26,12 @@ outputs:
   release-url:
     description: 'Release 页面 URL'
     value: ${{ steps.release.outputs.html_url }}
+  body:
+    description: '解析后的 Release Notes 内容'
+    value: ${{ steps.release.outputs.body }}
+  tag:
+    description: 'Git tag 名称'
+    value: ${{ steps.release.outputs.tag }}
 
 runs:
   using: 'composite'
@@ -191,3 +197,5 @@ runs:
 
           core.setOutput('version', version);
           core.setOutput('html_url', releaseUrl);
+          core.setOutput('body', releaseBody);
+          core.setOutput('tag', tag);
