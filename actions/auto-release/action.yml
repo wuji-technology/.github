@@ -1,0 +1,214 @@
+name: 'Auto Release from CHANGELOG'
+description: '解析 CHANGELOG.md 并自动创建 GitHub Release'
+author: 'wuji-technology'
+
+inputs:
+  changelog-path:
+    description: 'CHANGELOG 文件路径'
+    required: false
+    default: 'CHANGELOG.md'
+  github-token:
+    description: 'GitHub Token'
+    required: true
+  draft:
+    description: '是否创建草稿 Release'
+    required: false
+    default: 'false'
+  prerelease:
+    description: '是否标记为预发布'
+    required: false
+    default: 'true'
+
+outputs:
+  version:
+    description: '发布的版本号'
+    value: ${{ steps.release.outputs.version }}
+  release-url:
+    description: 'Release 页面 URL'
+    value: ${{ steps.release.outputs.html_url }}
+  body:
+    description: '解析后的 Release Notes 内容'
+    value: ${{ steps.release.outputs.body }}
+  tag:
+    description: 'Git tag 名称'
+    value: ${{ steps.release.outputs.tag }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Parse CHANGELOG and Upsert Release
+      id: release
+      uses: actions/github-script@v7
+      env:
+        CHANGELOG_PATH: ${{ inputs.changelog-path }}
+        INPUT_DRAFT: ${{ inputs.draft }}
+        INPUT_PRERELEASE: ${{ inputs.prerelease }}
+      with:
+        github-token: ${{ inputs.github-token }}
+        script: |
+          const fs = require('fs');
+
+          const changelogPath = process.env.CHANGELOG_PATH || 'CHANGELOG.md';
+
+          // 检查 CHANGELOG.md 是否存在
+          if (!fs.existsSync(changelogPath)) {
+            core.setFailed(`${changelogPath} not found`);
+            return;
+          }
+          const changelog = fs.readFileSync(changelogPath, 'utf8')
+            .replace(/\r\n?/g, '\n');
+
+          // 验证触发事件是否为 tag push
+          if (!context.ref.startsWith('refs/tags/')) {
+            core.setFailed(`This action must be triggered by a tag push. Current ref: ${context.ref}`);
+            return;
+          }
+
+          // 从 tag 提取版本号（支持预发布版本如 1.0.0-rc4）
+          const tag = context.ref.replace('refs/tags/', '');
+
+          // 验证 tag 格式必须以 v 开头
+          if (!tag.startsWith('v')) {
+            core.setFailed(`Invalid tag format: "${tag}". Tag must start with "v" (e.g., v1.0.0, v1.0.0-rc1). This is required for consistent Full Changelog links.`);
+            return;
+          }
+
+          const version = tag.replace(/^v/, '');
+          console.log(`Processing tag: ${tag}, version: ${version}`);
+
+          // 分类映射
+          const categoryMap = {
+            'Added': 'New Features', '新增': 'New Features',
+            'Changed': 'Improvements', '变更': 'Improvements',
+            'Fixed': 'Bug Fixes', '修复': 'Bug Fixes'
+          };
+          const cautionCategories = {
+            'Removed': 'Removed', '移除': 'Removed',
+            'Deprecated': 'Deprecated', '废弃': 'Deprecated',
+            'Security': 'Security', '安全': 'Security'
+          };
+
+          // 解析版本内容
+          function parseContent(content) {
+            const sections = { 'New Features': [], 'Improvements': [], 'Bug Fixes': [] };
+            const cautionItems = [];
+            let currentCategory = '';
+            let currentCautionPrefix = '';
+
+            for (const line of content.trim().split('\n')) {
+              const catMatch = line.match(/^### (.+)/);
+              if (catMatch) {
+                const cat = catMatch[1].trim();
+                if (categoryMap[cat]) {
+                  currentCategory = categoryMap[cat];
+                  currentCautionPrefix = '';
+                } else if (cautionCategories[cat]) {
+                  currentCategory = 'CAUTION';
+                  currentCautionPrefix = cautionCategories[cat];
+                } else {
+                  currentCategory = '';
+                }
+              } else if (line.startsWith('- ')) {
+                const item = line.slice(2);
+                if (currentCategory === 'CAUTION') {
+                  cautionItems.push(`**${currentCautionPrefix}**: ${item}`);
+                } else if (currentCategory && sections[currentCategory]) {
+                  sections[currentCategory].push(item);
+                }
+              }
+            }
+
+            let body = '';
+            for (const section of ['New Features', 'Improvements', 'Bug Fixes']) {
+              if (sections[section].length > 0) {
+                body += `### ${section}\n${sections[section].map(i => `- ${i}`).join('\n')}\n\n`;
+              }
+            }
+            if (cautionItems.length > 0) {
+              body += `> [!CAUTION]\n${cautionItems.map(i => `> - ${i}`).join('\n')}\n\n`;
+            }
+            return body.trim();
+          }
+
+          // 转义版本号中的特殊字符用于正则匹配
+          const escapedVersion = version.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+          // 更健壮的版本匹配正则（支持多种日期格式和可选内容）
+          const versionRegex = new RegExp(`## \\[${escapedVersion}\\](?:[^\\n]*-\\s*(\\d{4}-\\d{2}-\\d{2}))?[^\\n]*\\n([\\s\\S]*?)(?=\\n## \\[|$)`);
+          const match = changelog.match(versionRegex);
+
+          if (!match) {
+            core.setFailed(`Version ${version} not found in CHANGELOG.md`);
+            return;
+          }
+
+          const date = match[1] || new Date().toISOString().split('T')[0];
+          const content = match[2];
+          let body = parseContent(content);
+
+          if (!body) {
+            console.log(`Warning: No content parsed for version ${version}`);
+          }
+
+          // 获取所有版本用于 Full Changelog（支持预发布版本）
+          const allVersions = [...changelog.matchAll(/## \[(\d+\.\d+\.\d+(?:-[a-zA-Z0-9.]+)?)\]/g)].map(m => m[1]);
+          const versionIndex = allVersions.indexOf(version);
+          if (versionIndex === -1) {
+            console.log(`Warning: version ${version} not found in version list for Full Changelog`);
+          } else {
+            const prevVersion = allVersions[versionIndex + 1];
+            if (prevVersion) {
+              body += `\n\n---\n\n**Full Changelog**: [v${prevVersion}...${tag}](https://github.com/${context.repo.owner}/${context.repo.repo}/compare/v${prevVersion}...${tag})`;
+            }
+          }
+
+          // 检查 release 是否已存在（upsert 模式）
+          let releaseId = null;
+          try {
+            const { data } = await github.rest.repos.getReleaseByTag({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag: tag
+            });
+            releaseId = data.id;
+            console.log(`Found existing release: ${tag} (id: ${releaseId})`);
+          } catch (e) {
+            if (e.status !== 404) throw e;
+            console.log(`No existing release for tag: ${tag}`);
+          }
+
+          const releaseBody = `## ${tag} (${date})\n\n${body}`;
+          const isDraft = process.env.INPUT_DRAFT === 'true';
+          const isPrerelease = process.env.INPUT_PRERELEASE === 'true';
+
+          const releaseData = {
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            tag_name: tag,
+            name: tag,
+            body: releaseBody,
+            draft: isDraft,
+            prerelease: isPrerelease,
+            make_latest: 'false'
+          };
+
+          let releaseUrl = '';
+          if (releaseId) {
+            // 更新现有 release
+            const { data } = await github.rest.repos.updateRelease({
+              ...releaseData,
+              release_id: releaseId
+            });
+            releaseUrl = data.html_url;
+            console.log(`Updated release: ${tag}`);
+          } else {
+            // 创建新 release
+            const { data } = await github.rest.repos.createRelease(releaseData);
+            releaseUrl = data.html_url;
+            console.log(`Created release: ${tag}`);
+          }
+
+          core.setOutput('version', version);
+          core.setOutput('html_url', releaseUrl);
+          core.setOutput('body', releaseBody);
+          core.setOutput('tag', tag);
