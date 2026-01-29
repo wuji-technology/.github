@@ -1,4 +1,4 @@
-name: Centralized Release - Step 1 (Update CHANGELOG & Create PR)
+name: Centralized Release (Batch Update CHANGELOG)
 
 on:
   workflow_dispatch:
