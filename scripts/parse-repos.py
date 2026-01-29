@@ -27,8 +27,8 @@ def parse_repos(input_text):
         if not line or line.startswith('#'):
             continue
 
-        # 匹配 repo=version
-        match = re.match(r'^([a-zA-Z0-9_-]+)\s*=\s*(.+)$', line)
+        # 匹配 repo=version（支持点号，如 .github）
+        match = re.match(r'^([a-zA-Z0-9_.-]+)\s*=\s*(.+)$', line)
         if not match:
             raise ValueError(f"第 {line_num} 行格式错误: {line}\n正确格式: repo=version")
 
