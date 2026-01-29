@@ -114,11 +114,9 @@ jobs:
           branch_name="release/v${VERSION}"
           git checkout -b "$branch_name"
           git add CHANGELOG.md
-          git commit -m "chore(release): prepare v${VERSION}
+          git commit -m "release: v${VERSION}
 
-          Update CHANGELOG.md for v${VERSION} release
-
-          Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
+          Update CHANGELOG.md for v${VERSION} release"
 
           git push origin "$branch_name"
           echo "✅ 已推送分支: $branch_name"
@@ -158,7 +156,7 @@ jobs:
           🤖 Created by [Centralized Release Automation](https://github.com/wuji-technology/.github)"
 
           pr_url=$(gh pr create \
-            --title "chore(release): v${VERSION}" \
+            --title "release: v${VERSION}" \
             --body "$pr_body" \
             --label "auto-release" \
             --base main \
