@@ -6,6 +6,7 @@
 """
 import re
 import argparse
+import sys
 from datetime import date
 from pathlib import Path
 
@@ -55,12 +56,16 @@ def update_changelog(file_path, version, release_date=None):
 
     # 在顶部添加新的 Unreleased 占位符
     # 找到第一个 ## 标题的位置（应该是刚才替换的版本标题）
-    match = re.search(r'\n## ', content_new)
+    match = re.search(r'(^|\n)## ', content_new)
     if match:
         insert_pos = match.start()
-        before = content_new[:insert_pos]
-        after = content_new[insert_pos:]
-        content_new = f"{before}\n\n## [Unreleased]\n{after}"
+        # 如果匹配到的是行首（位置0），在之前插入
+        if insert_pos == 0:
+            content_new = f"## [Unreleased]\n\n{content_new}"
+        else:
+            before = content_new[:insert_pos]
+            after = content_new[insert_pos:]
+            content_new = f"{before}\n\n## [Unreleased]\n{after}"
     else:
         # 如果没有找到，说明文件格式可能有问题，但还是尝试添加
         content_new = f"## [Unreleased]\n\n{content_new}"
@@ -90,7 +95,7 @@ if __name__ == '__main__':
 
     if result['success']:
         print(f"✅ {result['message']}")
-        exit(0)
+        sys.exit(0)
     else:
         print(f"❌ {result['message']}")
-        exit(1)
+        sys.exit(1)

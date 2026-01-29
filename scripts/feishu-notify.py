@@ -27,7 +27,7 @@ def send_release_notification(webhook_url, repo, version, release_url, status):
         content_lines = [
             f"**仓库**: {repo}",
             f"**版本**: v{version}",
-            f"**状态**: ✅ 已发布"
+            "**状态**: ✅ 已发布"
         ]
         button_text = "查看 Release"
         button_url = release_url
@@ -37,7 +37,7 @@ def send_release_notification(webhook_url, repo, version, release_url, status):
         content_lines = [
             f"**仓库**: {repo}",
             f"**版本**: v{version}",
-            f"**状态**: ❌ 发布失败"
+            "**状态**: ❌ 发布失败"
         ]
         button_text = None
         button_url = None

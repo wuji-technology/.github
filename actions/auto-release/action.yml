@@ -218,7 +218,7 @@ runs:
           core.setOutput('tag', tag);
 
     - name: Send Feishu notification
-      if: ${{ inputs.feishu-webhook != '' }}
+      if: ${{ success() && inputs.feishu-webhook != '' }}
       uses: actions/github-script@v7
       env:
         FEISHU_WEBHOOK: ${{ inputs.feishu-webhook }}
