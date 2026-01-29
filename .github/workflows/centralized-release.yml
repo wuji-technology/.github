@@ -114,6 +114,9 @@ jobs:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           VERSION: ${{ matrix.version }}
         run: |
+          # 确保 auto-release label 存在
+          gh label create "auto-release" --description "Trigger auto-release on PR merge" --color "0E8A16" 2>/dev/null || true
+
           pr_body="## Release v${VERSION}
 
           此 PR 由集中式 Release 自动化流程创建。
