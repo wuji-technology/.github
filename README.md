@@ -34,7 +34,7 @@ Centralized GitHub configuration repository for [wuji-technology](https://github
 ### Directory Description
 
 | Directory | Description |
-|-----------|-------------|
+| --------- | ----------- |
 | `.github/workflows/` | Organization-wide GitHub Actions workflows |
 | `actions/` | Reusable composite actions for use across repositories |
 | `profile/` | Organization profile README displayed on GitHub |
