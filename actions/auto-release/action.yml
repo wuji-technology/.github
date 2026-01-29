@@ -225,18 +225,66 @@ runs:
         RELEASE_VERSION: ${{ steps.release.outputs.version }}
         RELEASE_URL: ${{ steps.release.outputs.html_url }}
         RELEASE_TAG: ${{ steps.release.outputs.tag }}
+        RELEASE_BODY: ${{ steps.release.outputs.body }}
       with:
         script: |
           const webhookUrl = process.env.FEISHU_WEBHOOK;
           const version = process.env.RELEASE_VERSION;
           const releaseUrl = process.env.RELEASE_URL;
           const tag = process.env.RELEASE_TAG;
+          const releaseBody = process.env.RELEASE_BODY || '';
           const repo = context.repo.repo;
 
           if (!webhookUrl) {
             console.log('Feishu webhook not configured, skipping notification');
             return;
           }
+
+          // Extract release notes (remove header and Full Changelog link)
+          let releaseNotes = releaseBody
+            .replace(/^## v[\d.]+ \(\d{4}-\d{2}-\d{2}\)\s*\n\n?/, '')  // Remove version header
+            .replace(/\n---\n\n\*\*Full Changelog\*\*:.*$/, '')        // Remove Full Changelog
+            .trim();
+
+          // Convert markdown headers for Feishu
+          releaseNotes = releaseNotes
+            .replace(/^### /gm, '**')
+            .replace(/^(\*\*[^*]+)\n/gm, '$1**\n');
+
+          const elements = [
+            {
+              tag: 'div',
+              text: {
+                content: `**Repository**: ${repo}\n**Version**: ${tag}`,
+                tag: 'lark_md'
+              }
+            }
+          ];
+
+          // Add release notes if available
+          if (releaseNotes) {
+            elements.push({
+              tag: 'hr'
+            });
+            elements.push({
+              tag: 'div',
+              text: {
+                content: releaseNotes,
+                tag: 'lark_md'
+              }
+            });
+          }
+
+          // Add action button
+          elements.push({
+            tag: 'action',
+            actions: [{
+              tag: 'button',
+              text: { content: 'View Release', tag: 'plain_text' },
+              url: releaseUrl,
+              type: 'primary'
+            }]
+          });
 
           const card = {
             msg_type: 'interactive',
@@ -245,24 +293,7 @@ runs:
                 title: { content: `🚀 ${repo} ${tag} Released`, tag: 'plain_text' },
                 template: 'green'
               },
-              elements: [
-                {
-                  tag: 'div',
-                  text: {
-                    content: `**Repository**: ${repo}\n**Version**: ${tag}\n**Status**: ✅ Released`,
-                    tag: 'lark_md'
-                  }
-                },
-                {
-                  tag: 'action',
-                  actions: [{
-                    tag: 'button',
-                    text: { content: 'View Release', tag: 'plain_text' },
-                    url: releaseUrl,
-                    type: 'primary'
-                  }]
-                }
-              ]
+              elements: elements
             }
           };
 
