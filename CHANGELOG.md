@@ -1,0 +1,20 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+
+## [Unreleased]
+
+### Added
+
+- Support custom CHANGELOG path in centralized release (`repo=version:changelog_path`)
+- Centralized multi-version release workflow (`centralized-release.yml`)
+- `parse-repos.py` script for parsing multi-line repo=version input
+- `update-changelog.py` script for updating CHANGELOG with version info
+- `feishu-notify.py` script for sending Feishu webhook notifications
+- Feishu notification support in `auto-release` action with release notes
+- `release_date` parameter for scheduling release dates
+- GitHub App token authentication for better security
+- `auto-release` composite action for automated GitHub Releases
+- Repository README and `.gitignore`
