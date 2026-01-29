@@ -45,14 +45,17 @@ Centralized GitHub configuration repository for [wuji-technology](https://github
 
 ### Centralized Release Automation
 
-Batch release workflow that updates CHANGELOG.md and creates release PRs across multiple repositories.
+Batch release workflow that updates CHANGELOG.md and creates release PRs across multiple repositories. Supports custom CHANGELOG paths for private repos with a `public/` folder pattern.
 
 ```yaml
 # Trigger via workflow_dispatch with:
 repositories: |
   wujihandpy=1.5.0
   wujihandros2=2.0.0
+  wuji-retargeting-private=0.2.0:public/CHANGELOG.md
 ```
+
+Input format: `repo=version` or `repo=version:changelog_path`. When `changelog_path` is omitted, it defaults to `CHANGELOG.md`.
 
 ### Auto Release Action
 
