@@ -55,11 +55,19 @@ jobs:
         with:
           path: .github-repo
 
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+          repositories: ${{ matrix.repo }}
+
       - name: Checkout target repository
         uses: actions/checkout@v4
         with:
           repository: wuji-technology/${{ matrix.repo }}
-          token: ${{ secrets.RELEASE_PAT }}
+          token: ${{ steps.app-token.outputs.token }}
           path: target-repo
 
       - name: Validate CHANGELOG exists
@@ -101,7 +109,7 @@ Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
         if: ${{ !inputs.dry_run }}
         working-directory: target-repo
         env:
-          GH_TOKEN: ${{ secrets.RELEASE_PAT }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           pr_url=$(gh pr create \
             --title "chore(release): v${{ matrix.version }}" \
