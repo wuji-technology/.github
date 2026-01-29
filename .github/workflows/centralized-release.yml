@@ -89,18 +89,20 @@ jobs:
       - name: Create release branch
         if: ${{ !inputs.dry_run }}
         working-directory: target-repo
+        env:
+          VERSION: ${{ matrix.version }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          branch_name="release/v${{ matrix.version }}"
+          branch_name="release/v${VERSION}"
           git checkout -b "$branch_name"
           git add CHANGELOG.md
-          git commit -m "chore(release): prepare v${{ matrix.version }}
+          git commit -m "chore(release): prepare v${VERSION}
 
-Update CHANGELOG.md for v${{ matrix.version }} release
+          Update CHANGELOG.md for v${VERSION} release
 
-Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
+          Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
 
           git push origin "$branch_name"
           echo "✅ 已推送分支: $branch_name"
@@ -110,30 +112,30 @@ Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
         working-directory: target-repo
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          VERSION: ${{ matrix.version }}
         run: |
+          pr_body="## Release v${VERSION}
+
+          此 PR 由集中式 Release 自动化流程创建。
+
+          ### 变更内容
+          - 更新 CHANGELOG.md，将 Unreleased 替换为 v${VERSION}
+
+          ### 后续步骤
+          1. ✅ 审核 CHANGELOG 内容
+          2. ✅ 合并此 PR
+          3. 🤖 自动触发: 打 tag、创建 release、发送飞书通知
+
+          ---
+
+          🤖 Created by [Centralized Release Automation](https://github.com/wuji-technology/.github)"
+
           pr_url=$(gh pr create \
-            --title "chore(release): v${{ matrix.version }}" \
-            --body "$(cat <<'EOF'
-## Release v${{ matrix.version }}
-
-此 PR 由集中式 Release 自动化流程创建。
-
-### 变更内容
-- 更新 CHANGELOG.md，将 Unreleased 替换为 v${{ matrix.version }}
-
-### 后续步骤
-1. ✅ 审核 CHANGELOG 内容
-2. ✅ 合并此 PR
-3. 🤖 自动触发: 打 tag、创建 release、发送飞书通知
-
----
-
-🤖 Created by [Centralized Release Automation](https://github.com/wuji-technology/.github)
-EOF
-)" \
+            --title "chore(release): v${VERSION}" \
+            --body "$pr_body" \
             --label "auto-release" \
             --base main \
-            --head "release/v${{ matrix.version }}")
+            --head "release/v${VERSION}")
 
           echo "✅ PR 创建成功: $pr_url"
 
