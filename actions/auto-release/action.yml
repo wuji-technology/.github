@@ -17,7 +17,11 @@ inputs:
   prerelease:
     description: '是否标记为预发布'
     required: false
-    default: 'true'
+    default: 'false'
+  feishu-webhook:
+    description: '飞书 webhook URL（可选，用于发送发布通知）'
+    required: false
+    default: ''
 
 outputs:
   version:
@@ -212,3 +216,68 @@ runs:
           core.setOutput('html_url', releaseUrl);
           core.setOutput('body', releaseBody);
           core.setOutput('tag', tag);
+
+    - name: Send Feishu notification
+      if: ${{ inputs.feishu-webhook != '' }}
+      uses: actions/github-script@v7
+      env:
+        FEISHU_WEBHOOK: ${{ inputs.feishu-webhook }}
+        RELEASE_VERSION: ${{ steps.release.outputs.version }}
+        RELEASE_URL: ${{ steps.release.outputs.html_url }}
+        RELEASE_TAG: ${{ steps.release.outputs.tag }}
+      with:
+        script: |
+          const webhookUrl = process.env.FEISHU_WEBHOOK;
+          const version = process.env.RELEASE_VERSION;
+          const releaseUrl = process.env.RELEASE_URL;
+          const tag = process.env.RELEASE_TAG;
+          const repo = context.repo.repo;
+
+          if (!webhookUrl) {
+            console.log('Feishu webhook not configured, skipping notification');
+            return;
+          }
+
+          const card = {
+            msg_type: 'interactive',
+            card: {
+              header: {
+                title: { content: `🚀 ${repo} ${tag} Released`, tag: 'plain_text' },
+                template: 'green'
+              },
+              elements: [
+                {
+                  tag: 'div',
+                  text: {
+                    content: `**Repository**: ${repo}\n**Version**: ${tag}\n**Status**: ✅ Released`,
+                    tag: 'lark_md'
+                  }
+                },
+                {
+                  tag: 'action',
+                  actions: [{
+                    tag: 'button',
+                    text: { content: 'View Release', tag: 'plain_text' },
+                    url: releaseUrl,
+                    type: 'primary'
+                  }]
+                }
+              ]
+            }
+          };
+
+          try {
+            const response = await fetch(webhookUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(card)
+            });
+
+            if (response.ok) {
+              console.log('✅ Feishu notification sent successfully');
+            } else {
+              console.log(`⚠️ Feishu notification failed: ${response.status}`);
+            }
+          } catch (error) {
+            console.log(`⚠️ Feishu notification error: ${error.message}`);
+          }
