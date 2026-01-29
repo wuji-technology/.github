@@ -10,6 +10,7 @@
 import json
 import re
 import sys
+from pathlib import PurePosixPath
 
 
 def parse_repos(input_text):
@@ -51,6 +52,9 @@ def parse_repos(input_text):
             )
 
         # 验证 changelog_path
+        path = PurePosixPath(changelog_path)
+        if path.is_absolute() or ".." in path.parts:
+            raise ValueError(f"第 {line_num} 行 CHANGELOG 路径必须为仓库内相对路径且不得包含 .. : {changelog_path}")
         if not changelog_path.endswith('.md'):
             raise ValueError(f"第 {line_num} 行 CHANGELOG 路径必须以 .md 结尾: {changelog_path}")
 
