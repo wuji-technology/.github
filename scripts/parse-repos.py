@@ -2,10 +2,10 @@
 """
 解析多行文本格式的仓库版本配置
 
-格式: repo=version，每行一个
+格式: repo=version 或 repo=version:changelog_path，每行一个
 示例:
     wujihandpy=1.5.0
-    wujihandros2=2.0.0
+    wuji-retargeting-private=0.2.0:public/CHANGELOG.md
 """
 import json
 import re
@@ -14,8 +14,8 @@ import sys
 
 def parse_repos(input_text):
     """
-    解析格式: repo1=1.5.0\nrepo2=2.0.0
-    返回: [{"repo": "repo1", "version": "1.5.0"}, ...]
+    解析格式: repo1=1.5.0\nrepo2=2.0.0:public/CHANGELOG.md
+    返回: [{"repo": "repo1", "version": "1.5.0", "changelog_path": "CHANGELOG.md"}, ...]
     """
     result = []
 
@@ -31,8 +31,17 @@ def parse_repos(input_text):
         if not match:
             raise ValueError(f"第 {line_num} 行格式错误: {line}\n正确格式: repo=version")
 
-        repo, version = match.groups()
-        version = version.strip()
+        repo, value = match.groups()
+        value = value.strip()
+
+        # 拆分 version 和可选的 changelog_path
+        if ':' in value:
+            version, changelog_path = value.split(':', 1)
+            version = version.strip()
+            changelog_path = changelog_path.strip()
+        else:
+            version = value
+            changelog_path = "CHANGELOG.md"
 
         # 验证版本号格式 (X.Y.Z 或 X.Y.Z-suffix)
         if not re.match(r'^\d+\.\d+\.\d+(-[a-zA-Z0-9.]+)?$', version):
@@ -41,7 +50,11 @@ def parse_repos(input_text):
                 f"正确格式: X.Y.Z 或 X.Y.Z-suffix (如 1.5.0 或 1.5.0-hotfix.1)"
             )
 
-        result.append({"repo": repo.strip(), "version": version})
+        # 验证 changelog_path
+        if not changelog_path.endswith('.md'):
+            raise ValueError(f"第 {line_num} 行 CHANGELOG 路径必须以 .md 结尾: {changelog_path}")
+
+        result.append({"repo": repo.strip(), "version": version, "changelog_path": changelog_path})
 
     if not result:
         raise ValueError("未找到有效的仓库配置，请至少提供一个 repo=version 行")
