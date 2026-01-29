@@ -1,0 +1,173 @@
+name: Centralized Release (Batch Update CHANGELOG)
+
+on:
+  workflow_dispatch:
+    inputs:
+      repositories:
+        description: '仓库和版本配置 (每行一个，格式: repo=version)'
+        required: true
+        type: string
+        default: |
+          # 示例:
+          # wujihandpy=1.5.0
+          # wujihandros2=2.0.0
+      release_date:
+        description: '发布日期 (YYYY-MM-DD，留空则使用当天)'
+        required: false
+        type: string
+        default: ''
+      dry_run:
+        description: 'Dry run (仅测试，不创建 PR)'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  parse-input:
+    name: Parse Repository Configuration
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.parse.outputs.matrix }}
+    steps:
+      - name: Checkout .github repository
+        uses: actions/checkout@v4
+
+      - name: Parse repositories input
+        id: parse
+        run: |
+          echo "解析仓库配置..."
+          echo '${{ inputs.repositories }}' | python3 scripts/parse-repos.py > repos.json
+
+          # 读取并输出
+          matrix=$(cat repos.json | jq -c '{include: .}')
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
+
+          echo "✅ 解析成功，将处理以下仓库:"
+          cat repos.json | jq -r '.[] | "  - \(.repo) v\(.version)"'
+
+  update-changelog:
+    name: Update CHANGELOG - ${{ matrix.repo }} v${{ matrix.version }}
+    needs: parse-input
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 3
+      fail-fast: false
+      matrix: ${{ fromJson(needs.parse-input.outputs.matrix) }}
+
+    steps:
+      - name: Checkout .github repository
+        uses: actions/checkout@v4
+        with:
+          path: .github-repo
+
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+          repositories: ${{ matrix.repo }}
+
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+        with:
+          repository: wuji-technology/${{ matrix.repo }}
+          token: ${{ steps.app-token.outputs.token }}
+          path: target-repo
+
+      - name: Validate CHANGELOG exists
+        working-directory: target-repo
+        run: |
+          if [ ! -f "CHANGELOG.md" ]; then
+            echo "❌ 错误: CHANGELOG.md 不存在"
+            exit 1
+          fi
+          echo "✅ CHANGELOG.md 存在"
+
+      - name: Update CHANGELOG.md
+        working-directory: target-repo
+        env:
+          RELEASE_DATE: ${{ inputs.release_date }}
+        run: |
+          date_arg=""
+          if [ -n "$RELEASE_DATE" ]; then
+            date_arg="--date $RELEASE_DATE"
+            echo "📅 使用指定发布日期: $RELEASE_DATE"
+          else
+            echo "📅 使用当天日期"
+          fi
+
+          python3 ../.github-repo/scripts/update-changelog.py \
+            --file CHANGELOG.md \
+            --version ${{ matrix.version }} \
+            $date_arg
+
+      - name: Create release branch
+        if: ${{ !inputs.dry_run }}
+        working-directory: target-repo
+        env:
+          VERSION: ${{ matrix.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          branch_name="release/v${VERSION}"
+          git checkout -b "$branch_name"
+          git add CHANGELOG.md
+          git commit -m "release: v${VERSION}
+
+          Update CHANGELOG.md for v${VERSION} release"
+
+          git push origin "$branch_name"
+          echo "✅ 已推送分支: $branch_name"
+
+      - name: Create Pull Request
+        if: ${{ !inputs.dry_run }}
+        working-directory: target-repo
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          VERSION: ${{ matrix.version }}
+          RELEASE_DATE: ${{ inputs.release_date }}
+        run: |
+          # 确保 auto-release label 存在
+          gh label create "auto-release" --description "Trigger auto-release on PR merge" --color "0E8A16" 2>/dev/null || true
+
+          # 显示发布日期信息
+          date_info=""
+          if [ -n "$RELEASE_DATE" ]; then
+            date_info="- **计划发布日期**: ${RELEASE_DATE}"
+          fi
+
+          pr_body="## Release v${VERSION}
+
+          此 PR 由集中式 Release 自动化流程创建。
+
+          ### 变更内容
+          - 更新 CHANGELOG.md，将 Unreleased 替换为 v${VERSION}
+          ${date_info}
+
+          ### 后续步骤
+          1. ✅ 审核 CHANGELOG 内容
+          2. ✅ 在发布日期合并此 PR
+          3. 🤖 自动触发: 打 tag、创建 release、发送飞书通知
+
+          ---
+
+          🤖 Created by [Centralized Release Automation](https://github.com/wuji-technology/.github)"
+
+          pr_url=$(gh pr create \
+            --title "release: v${VERSION}" \
+            --body "$pr_body" \
+            --label "auto-release" \
+            --base main \
+            --head "release/v${VERSION}")
+
+          echo "✅ PR 创建成功: $pr_url"
+
+      - name: Dry run summary
+        if: ${{ inputs.dry_run }}
+        run: |
+          echo "🔍 Dry run 模式，不创建 PR"
+          echo "✅ CHANGELOG 更新成功"
+          echo ""
+          echo "如需实际创建 PR，请取消勾选 dry_run 选项"
