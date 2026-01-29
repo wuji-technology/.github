@@ -11,6 +11,11 @@ on:
           # 示例:
           # wujihandpy=1.5.0
           # wujihandros2=2.0.0
+      release_date:
+        description: '发布日期 (YYYY-MM-DD，留空则使用当天)'
+        required: false
+        type: string
+        default: ''
       dry_run:
         description: 'Dry run (仅测试，不创建 PR)'
         required: false
@@ -81,10 +86,21 @@ jobs:
 
       - name: Update CHANGELOG.md
         working-directory: target-repo
+        env:
+          RELEASE_DATE: ${{ inputs.release_date }}
         run: |
+          date_arg=""
+          if [ -n "$RELEASE_DATE" ]; then
+            date_arg="--date $RELEASE_DATE"
+            echo "📅 使用指定发布日期: $RELEASE_DATE"
+          else
+            echo "📅 使用当天日期"
+          fi
+
           python3 ../.github-repo/scripts/update-changelog.py \
             --file CHANGELOG.md \
-            --version ${{ matrix.version }}
+            --version ${{ matrix.version }} \
+            $date_arg
 
       - name: Create release branch
         if: ${{ !inputs.dry_run }}
@@ -113,9 +129,16 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           VERSION: ${{ matrix.version }}
+          RELEASE_DATE: ${{ inputs.release_date }}
         run: |
           # 确保 auto-release label 存在
           gh label create "auto-release" --description "Trigger auto-release on PR merge" --color "0E8A16" 2>/dev/null || true
+
+          # 显示发布日期信息
+          date_info=""
+          if [ -n "$RELEASE_DATE" ]; then
+            date_info="- **计划发布日期**: ${RELEASE_DATE}"
+          fi
 
           pr_body="## Release v${VERSION}
 
@@ -123,10 +146,11 @@ jobs:
 
           ### 变更内容
           - 更新 CHANGELOG.md，将 Unreleased 替换为 v${VERSION}
+          ${date_info}
 
           ### 后续步骤
           1. ✅ 审核 CHANGELOG 内容
-          2. ✅ 合并此 PR
+          2. ✅ 在发布日期合并此 PR
           3. 🤖 自动触发: 打 tag、创建 release、发送飞书通知
 
           ---
