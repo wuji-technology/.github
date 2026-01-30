@@ -23,3 +23,16 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: false
           feishu-webhook: ${{ secrets.FEISHU_RELEASE_WEBHOOK }}
+
+      - name: Update major version tag
+        run: |
+          # 从 v1.0.1 提取 major version -> v1
+          VERSION="${GITHUB_REF#refs/tags/}"
+          MAJOR=$(echo "$VERSION" | sed -E 's/^(v[0-9]+).*/\1/')
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git tag -f "$MAJOR"
+          git push origin "$MAJOR" --force
+          echo "✅ Updated $MAJOR tag to point to $VERSION"
