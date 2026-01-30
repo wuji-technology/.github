@@ -21,5 +21,5 @@ jobs:
         uses: wuji-technology/.github/actions/auto-release@24ff1d553c7541f5385c0d2498309c49e8c5ef5e  # main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          prerelease: false
+          prerelease: true
           feishu-webhook: ${{ secrets.FEISHU_RELEASE_WEBHOOK }}
