@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- `auto-release-on-pr.yml` workflow for creating tags on PR merge with `auto-release` label
+- `auto-release.yml` workflow for creating GitHub Release on tag push
 - Support custom CHANGELOG path in centralized release (`repo=version:changelog_path`)
 - Centralized multi-version release workflow (`centralized-release.yml`)
 - `parse-repos.py` script for parsing multi-line repo=version input
