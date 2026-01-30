@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- Auto-update major version tag (e.g., `v1`) when releasing patch/minor versions in `auto-release.yml`
+
 ### Fixed
 
 - Fix multiline repository input being collapsed into single line in `centralized-release.yml`
