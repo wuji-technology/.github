@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-01-30
+
 ### Added
 
 - Auto-update major version tag (e.g., `v1`) when releasing patch/minor versions in `auto-release.yml`
