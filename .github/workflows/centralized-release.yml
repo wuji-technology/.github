@@ -36,7 +36,9 @@ jobs:
         id: parse
         run: |
           echo "解析仓库配置..."
-          echo '${{ inputs.repositories }}' | python3 scripts/parse-repos.py > repos.json
+          cat <<'EOF' | python3 scripts/parse-repos.py > repos.json
+          ${{ inputs.repositories }}
+          EOF
 
           # 读取并输出
           matrix=$(cat repos.json | jq -c '{include: .}')
