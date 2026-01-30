@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- Add Feishu notification to `centralized-release.yml` with colored status headers and repository links
+
 ## [1.0.2] - 2026-01-30
 
 ### Fixed
