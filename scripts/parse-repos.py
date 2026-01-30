@@ -16,9 +16,14 @@ from pathlib import PurePosixPath
 def parse_repos(input_text):
     """
     解析格式: repo1=1.5.0\nrepo2=2.0.0:public/CHANGELOG.md
+    也支持空格分隔（GitHub Actions 可能把换行变成空格）
     返回: [{"repo": "repo1", "version": "1.5.0", "changelog_path": "CHANGELOG.md"}, ...]
     """
     result = []
+
+    # 预处理：如果输入是空格分隔的单行，转换为多行
+    # 匹配 "repo=" 模式前的空白符（但不是行首），替换为换行
+    input_text = re.sub(r'(?<!^)\s+(?=[a-zA-Z0-9_.-]+=)', '\n', input_text.strip())
 
     for line_num, line in enumerate(input_text.strip().split('\n'), 1):
         line = line.strip()
