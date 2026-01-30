@@ -63,9 +63,9 @@ def update_changelog(file_path, version, release_date=None):
         if insert_pos == 0:
             content_new = f"## [Unreleased]\n\n{content_new}"
         else:
-            before = content_new[:insert_pos]
-            after = content_new[insert_pos:]
-            content_new = f"{before}\n\n## [Unreleased]\n{after}"
+            before = content_new[:insert_pos].rstrip('\n')
+            after = content_new[insert_pos:].lstrip('\n')
+            content_new = f"{before}\n\n## [Unreleased]\n\n{after}"
     else:
         # 如果没有找到，说明文件格式可能有问题，但还是尝试添加
         content_new = f"## [Unreleased]\n\n{content_new}"

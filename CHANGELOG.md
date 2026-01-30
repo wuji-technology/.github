@@ -4,7 +4,6 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-
 ## [Unreleased]
 
 ### Added
@@ -14,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 
 - Fix multiline repository input being collapsed into single line in `centralized-release.yml`
+- Fix `update-changelog.py` adding extra blank lines when inserting Unreleased section
 
 ## [1.0.0] - 2026-01-30
 
