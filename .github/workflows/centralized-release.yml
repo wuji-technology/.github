@@ -174,3 +174,128 @@ jobs:
           echo "✅ CHANGELOG 更新成功"
           echo ""
           echo "如需实际创建 PR，请取消勾选 dry_run 选项"
+
+  notify-feishu:
+    name: Notify Feishu
+    needs: [parse-input, update-changelog]
+    if: always() && needs.parse-input.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build notification content
+        id: build-content
+        env:
+          REPOS_INPUT: ${{ inputs.repositories }}
+          RELEASE_DATE: ${{ inputs.release_date }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          JOB_STATUS: ${{ needs.update-changelog.result }}
+        run: |
+          # 设置状态
+          if [ "$JOB_STATUS" = "success" ]; then
+            echo "status_emoji=✅" >> $GITHUB_OUTPUT
+            echo "status_text=成功" >> $GITHUB_OUTPUT
+            echo "card_color=green" >> $GITHUB_OUTPUT
+          else
+            echo "status_emoji=❌" >> $GITHUB_OUTPUT
+            echo "status_text=失败" >> $GITHUB_OUTPUT
+            echo "card_color=red" >> $GITHUB_OUTPUT
+          fi
+
+          # dry run 标记
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "dry_run_tag= 🧪 DRY RUN" >> $GITHUB_OUTPUT
+          else
+            echo "dry_run_tag=" >> $GITHUB_OUTPUT
+          fi
+
+          # 解析仓库列表并生成带链接的 markdown
+          REPO_MD=""
+          while IFS= read -r line; do
+            # 跳过空行和注释
+            line=$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+            [[ -z "$line" || "$line" == \#* ]] && continue
+
+            REPO=$(echo "$line" | cut -d'=' -f1)
+            VERSION=$(echo "$line" | cut -d'=' -f2)
+            REPO_MD="${REPO_MD}• [${REPO}](https://github.com/wuji-technology/${REPO}/pulls) → v${VERSION}\\n"
+          done <<< "$REPOS_INPUT"
+
+          # 保存仓库列表（使用 delimiter 方式处理多行）
+          EOF_MARKER=$(dd if=/dev/urandom bs=15 count=1 2>/dev/null | base64)
+          echo "repo_md<<${EOF_MARKER}" >> $GITHUB_OUTPUT
+          echo -e "$REPO_MD" >> $GITHUB_OUTPUT
+          echo "${EOF_MARKER}" >> $GITHUB_OUTPUT
+
+          # 发布日期
+          if [ -n "$RELEASE_DATE" ]; then
+            echo "release_date=$RELEASE_DATE" >> $GITHUB_OUTPUT
+          else
+            echo "release_date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Send Feishu notification
+        env:
+          WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
+        run: |
+          # 转义 repo_md 中的换行符用于 JSON
+          REPO_MD_ESCAPED=$(cat <<'CONTENT'
+          ${{ steps.build-content.outputs.repo_md }}
+          CONTENT
+          )
+          REPO_MD_ESCAPED=$(echo "$REPO_MD_ESCAPED" | sed ':a;N;$!ba;s/\n/\\n/g' | sed 's/"/\\"/g')
+
+          curl -X POST "$WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "msg_type": "interactive",
+              "card": {
+                "header": {
+                  "title": {
+                    "content": "${{ steps.build-content.outputs.status_emoji }} Release 自动化${{ steps.build-content.outputs.status_text }}${{ steps.build-content.outputs.dry_run_tag }}",
+                    "tag": "plain_text"
+                  },
+                  "template": "${{ steps.build-content.outputs.card_color }}"
+                },
+                "elements": [
+                  {
+                    "tag": "div",
+                    "text": {
+                      "tag": "lark_md",
+                      "content": "**发布日期**: ${{ steps.build-content.outputs.release_date }}\n**触发者**: ${{ github.actor }}"
+                    }
+                  },
+                  {
+                    "tag": "hr"
+                  },
+                  {
+                    "tag": "div",
+                    "text": {
+                      "tag": "lark_md",
+                      "content": "**涉及仓库**:\\n'"$REPO_MD_ESCAPED"'"
+                    }
+                  },
+                  {
+                    "tag": "action",
+                    "actions": [
+                      {
+                        "tag": "button",
+                        "text": {
+                          "tag": "plain_text",
+                          "content": "查看运行详情"
+                        },
+                        "type": "primary",
+                        "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "note",
+                    "elements": [
+                      {
+                        "tag": "plain_text",
+                        "content": "🤖 Centralized Release Automation"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }'
