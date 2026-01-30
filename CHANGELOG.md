@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix multiline repository input being collapsed into single line in `centralized-release.yml`
+
 ## [1.0.0] - 2026-01-30
 
 ### Added
