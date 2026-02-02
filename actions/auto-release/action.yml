@@ -183,7 +183,7 @@ runs:
 
           const releaseBody = `## ${tag} (${date})\n\n${body}`;
           const isDraft = process.env.INPUT_DRAFT === 'true';
-          const isPrerelease = process.env.INPUT_PRERELEASE === 'true';
+          const isPrerelease = /-(rc|alpha|beta)/i.test(tag);
 
           const releaseData = {
             owner: context.repo.owner,
@@ -193,7 +193,7 @@ runs:
             body: releaseBody,
             draft: isDraft,
             prerelease: isPrerelease,
-            make_latest: 'false'
+            make_latest: isPrerelease ? 'false' : 'true'
           };
 
           let releaseUrl = '';
