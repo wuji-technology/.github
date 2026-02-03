@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- Add Release Notes automation workflow (`collect-changelogs.yml`) for auto-collecting changelogs and generating release notes
+- Add `fetch-changelogs.py` script for fetching CHANGELOG content from multiple repositories via GitHub API
+- Add `generate-release-template.py` script for generating bilingual (zh/en) release notes templates
+- Add `release-notes-config.json` configuration file for component metadata mapping
 - Add Feishu notification to `centralized-release.yml` with colored status headers and repository links
 
 ### Changed
