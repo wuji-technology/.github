@@ -231,7 +231,7 @@ jobs:
               }
             }')
 
-          curl -s -X POST "$WEBHOOK_URL" \
+          curl -sS --fail -X POST "$WEBHOOK_URL" \
             -H "Content-Type: application/json" \
             -d "$JSON_PAYLOAD" > /dev/null
 

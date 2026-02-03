@@ -60,7 +60,11 @@ def fetch_changelog_from_tag(repo, version, changelog_path, token):
     content = data.get("content", "")
     encoding = data.get("encoding", "")
     if encoding == "base64":
-        return base64.b64decode(content).decode("utf-8")
+        try:
+            return base64.b64decode(content).decode("utf-8")
+        except UnicodeDecodeError:
+            print(f"⚠️  {repo}: CHANGELOG 非 UTF-8，已跳过", file=sys.stderr)
+            return None
 
     print(f"⚠️  {repo}: 未知编码格式 {encoding}", file=sys.stderr)
     return None

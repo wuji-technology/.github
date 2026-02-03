@@ -158,7 +158,11 @@ def main():
 
     # 发布日期
     if args.release_date:
-        release_date = date.fromisoformat(args.release_date)
+        try:
+            release_date = date.fromisoformat(args.release_date)
+        except ValueError:
+            print("❌ 错误: 发布日期格式应为 YYYY-MM-DD", file=sys.stderr)
+            sys.exit(1)
     else:
         release_date = date.today()
 
