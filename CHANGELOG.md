@@ -10,6 +10,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - Add Feishu notification to `centralized-release.yml` with colored status headers and repository links
 
+### Changed
+
+- Auto-detect prerelease from tag name (-rc/-alpha/-beta) instead of relying on `prerelease` input
+- Set `make_latest` dynamically: stable versions become latest, prerelease versions do not
+
+### Removed
+
+- Remove unused `prerelease` input parameter from `auto-release` action
+
 ### Fixed
 
 - Fix newline handling in Feishu cards using jq for proper JSON payload construction
