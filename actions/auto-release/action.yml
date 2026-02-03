@@ -14,10 +14,6 @@ inputs:
     description: '是否创建草稿 Release'
     required: false
     default: 'false'
-  prerelease:
-    description: '是否标记为预发布'
-    required: false
-    default: 'false'
   feishu-webhook:
     description: '飞书 webhook URL（可选，用于发送发布通知）'
     required: false
@@ -46,7 +42,6 @@ runs:
       env:
         CHANGELOG_PATH: ${{ inputs.changelog-path }}
         INPUT_DRAFT: ${{ inputs.draft }}
-        INPUT_PRERELEASE: ${{ inputs.prerelease }}
       with:
         github-token: ${{ inputs.github-token }}
         script: |
