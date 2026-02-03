@@ -183,8 +183,15 @@ def main():
 
     # 更新中文文件
     zh_path = os.path.join(args.output_dir, config["release_notes_path_zh"])
-    with open(zh_path, encoding="utf-8") as f:
-        zh_content = f.read()
+    try:
+        with open(zh_path, encoding="utf-8") as f:
+            zh_content = f.read()
+    except FileNotFoundError:
+        print(f"❌ 错误: 中文 Release Notes 文件不存在: {zh_path}", file=sys.stderr)
+        sys.exit(1)
+    except PermissionError:
+        print(f"❌ 错误: 无权限读取文件: {zh_path}", file=sys.stderr)
+        sys.exit(1)
     zh_updated = insert_new_release(zh_content, zh_section, r"^## 发布日期")
     with open(zh_path, "w", encoding="utf-8") as f:
         f.write(zh_updated)
@@ -192,8 +199,15 @@ def main():
 
     # 更新英文文件
     en_path = os.path.join(args.output_dir, config["release_notes_path_en"])
-    with open(en_path, encoding="utf-8") as f:
-        en_content = f.read()
+    try:
+        with open(en_path, encoding="utf-8") as f:
+            en_content = f.read()
+    except FileNotFoundError:
+        print(f"❌ 错误: 英文 Release Notes 文件不存在: {en_path}", file=sys.stderr)
+        sys.exit(1)
+    except PermissionError:
+        print(f"❌ 错误: 无权限读取文件: {en_path}", file=sys.stderr)
+        sys.exit(1)
     en_updated = insert_new_release(en_content, en_section, r"^## Release Date")
     with open(en_path, "w", encoding="utf-8") as f:
         f.write(en_updated)
