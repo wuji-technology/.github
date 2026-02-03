@@ -150,11 +150,19 @@ def main():
 
     # 读取配置
     config_path = os.path.join(os.path.dirname(__file__), "release-notes-config.json")
-    with open(config_path, encoding="utf-8") as f:
-        config = json.load(f)
+    try:
+        with open(config_path, encoding="utf-8") as f:
+            config = json.load(f)
+    except FileNotFoundError:
+        print(f"❌ 错误: 配置文件不存在: {config_path}", file=sys.stderr)
+        sys.exit(1)
 
     # 从 stdin 读取 changelog 数据
-    components = json.loads(sys.stdin.read())
+    try:
+        components = json.loads(sys.stdin.read())
+    except json.JSONDecodeError as e:
+        print(f"❌ 错误: stdin 输入的 JSON 格式无效: {e}", file=sys.stderr)
+        sys.exit(1)
 
     # 发布日期
     if args.release_date:
@@ -193,8 +201,12 @@ def main():
         print(f"❌ 错误: 无权限读取文件: {zh_path}", file=sys.stderr)
         sys.exit(1)
     zh_updated = insert_new_release(zh_content, zh_section, r"^## 发布日期")
-    with open(zh_path, "w", encoding="utf-8") as f:
-        f.write(zh_updated)
+    try:
+        with open(zh_path, "w", encoding="utf-8") as f:
+            f.write(zh_updated)
+    except PermissionError:
+        print(f"❌ 错误: 无权限写入文件: {zh_path}", file=sys.stderr)
+        sys.exit(1)
     print(f"✅ 已更新中文 Release Notes: {zh_path}", file=sys.stderr)
 
     # 更新英文文件
@@ -209,8 +221,12 @@ def main():
         print(f"❌ 错误: 无权限读取文件: {en_path}", file=sys.stderr)
         sys.exit(1)
     en_updated = insert_new_release(en_content, en_section, r"^## Release Date")
-    with open(en_path, "w", encoding="utf-8") as f:
-        f.write(en_updated)
+    try:
+        with open(en_path, "w", encoding="utf-8") as f:
+            f.write(en_updated)
+    except PermissionError:
+        print(f"❌ 错误: 无权限写入文件: {en_path}", file=sys.stderr)
+        sys.exit(1)
     print(f"✅ 已更新英文 Release Notes: {en_path}", file=sys.stderr)
 
 
