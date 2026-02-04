@@ -164,6 +164,9 @@ def main():
         if item.get("changelog_path") and item["changelog_path"] != "CHANGELOG.md":
             changelog_path = item["changelog_path"]
 
+        # 确定抓取 CHANGELOG 的实际仓库（可能与输入 repo 不同）
+        source_repo = component.get("source_repo", repo)
+
         entry = {
             "repo": repo,
             "version": version,
@@ -176,15 +179,15 @@ def main():
             "changelog": None,
         }
 
-        # firmware 等无仓库组件跳过抓取
+        # 无 CHANGELOG 路径的组件跳过抓取
         if changelog_path is None:
             print(f"ℹ️  {repo}: 无 CHANGELOG 路径，跳过抓取", file=sys.stderr)
             results.append(entry)
             continue
 
         # 获取 CHANGELOG
-        print(f"📥 正在获取 {repo} v{version} 的 CHANGELOG...", file=sys.stderr)
-        raw = fetch_changelog_from_tag(repo, version, changelog_path, token)
+        print(f"📥 正在获取 {repo} v{version} 的 CHANGELOG（from {source_repo}）...", file=sys.stderr)
+        raw = fetch_changelog_from_tag(source_repo, version, changelog_path, token)
         if raw is None:
             results.append(entry)
             continue

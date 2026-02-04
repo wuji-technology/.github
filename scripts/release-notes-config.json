@@ -4,7 +4,8 @@
       "display_name_zh": "固件",
       "display_name_en": "Firmware",
       "public_repo": null,
-      "changelog_path": null,
+      "source_repo": "wh110-firmware",
+      "changelog_path": "CHANGELOG.md",
       "update_method_zh": "通过 Wuji Hand Upgrader 更新",
       "update_method_en": "Update via Wuji Hand Upgrader",
       "order": 1
