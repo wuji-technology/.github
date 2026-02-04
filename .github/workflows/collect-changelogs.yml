@@ -1,0 +1,238 @@
+name: Collect Changelogs & Generate Release Notes
+
+on:
+  workflow_dispatch:
+    inputs:
+      repositories:
+        description: '仓库和版本配置 (每行一个，格式: repo=version)'
+        required: true
+        type: string
+        default: |
+          # 示例:
+          # wujihandpy=1.5.1
+          # wujihand-hmi-dev=1.5.1
+          # firmware=1.2.1
+      release_date:
+        description: '发布日期 (YYYY-MM-DD，留空则使用当天)'
+        required: false
+        type: string
+        default: ''
+      dry_run:
+        description: 'Dry run (仅测试，不创建 PR)'
+        required: false
+        type: boolean
+        default: false
+
+  workflow_call:
+    inputs:
+      repositories:
+        description: '仓库和版本配置'
+        required: true
+        type: string
+      release_date:
+        description: '发布日期'
+        required: false
+        type: string
+        default: ''
+      dry_run:
+        description: 'Dry run'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  collect-and-generate:
+    name: Collect Changelogs & Generate PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout .github repository
+        uses: actions/checkout@v4
+
+      - name: Generate GitHub App token (source repos)
+        id: app-token-source
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+          owner: wuji-technology
+
+      - name: Generate GitHub App token (docs repo)
+        id: app-token-docs
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+          repositories: wuji-docs-center
+
+      - name: Parse repositories input
+        run: |
+          cat <<'EOF' | python3 scripts/parse-repos.py > repos.json
+          ${{ inputs.repositories }}
+          EOF
+          echo "✅ 解析成功:"
+          cat repos.json | jq -r '.[] | "  - \(.repo) v\(.version)"'
+
+      - name: Fetch changelogs
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token-source.outputs.token }}
+        run: |
+          cat repos.json | python3 scripts/fetch-changelogs.py > changelogs.json
+          echo "✅ CHANGELOG 抓取完成"
+          echo ""
+          echo "=== 抓取结果 ==="
+          cat changelogs.json | jq -r '.[] | "\(.repo) v\(.version): \(if .changelog then "✅ 已获取" else "⚠️ 未获取" end)"'
+
+      - name: Dry run - preview output
+        if: ${{ inputs.dry_run }}
+        env:
+          RELEASE_DATE: ${{ inputs.release_date }}
+        run: |
+          echo "🔍 Dry run 模式，预览生成结果:"
+          echo ""
+          date_arg=""
+          if [ -n "$RELEASE_DATE" ]; then
+            date_arg="--release-date $RELEASE_DATE"
+          fi
+          cat changelogs.json | python3 scripts/generate-release-template.py \
+            --output-dir /tmp \
+            --dry-run \
+            $date_arg
+
+      - name: Checkout docs repository
+        if: ${{ !inputs.dry_run }}
+        uses: actions/checkout@v4
+        with:
+          repository: wuji-technology/wuji-docs-center
+          token: ${{ steps.app-token-docs.outputs.token }}
+          path: docs-repo
+
+      - name: Generate release notes
+        if: ${{ !inputs.dry_run }}
+        env:
+          RELEASE_DATE: ${{ inputs.release_date }}
+        run: |
+          if [ -n "$RELEASE_DATE" ]; then
+            display_date="$RELEASE_DATE"
+            date_arg="--release-date $RELEASE_DATE"
+          else
+            display_date="$(date +%Y-%m-%d)"
+            date_arg=""
+          fi
+
+          echo "branch_name=chore/update-release-notes-${display_date}" >> $GITHUB_ENV
+          echo "display_date=$display_date" >> $GITHUB_ENV
+
+          cat changelogs.json | python3 scripts/generate-release-template.py \
+            --output-dir docs-repo \
+            $date_arg
+
+      - name: Create branch and push
+        if: ${{ !inputs.dry_run }}
+        working-directory: docs-repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "${{ env.branch_name }}"
+          git add content/docs/zh/wuji-hand/latest/release-notes.mdx
+          git add content/docs/en/wuji-hand/latest/release-notes.mdx
+          if git diff --cached --quiet; then
+            echo "::error::没有文件变更，可能该日期的 release notes 已存在"
+            exit 1
+          fi
+          git commit -m "docs: update release notes for ${{ env.display_date }}"
+          git push origin "${{ env.branch_name }}"
+          echo "✅ 已推送分支: ${{ env.branch_name }}"
+
+      - name: Create Pull Request
+        if: ${{ !inputs.dry_run }}
+        id: create-pr
+        working-directory: docs-repo
+        env:
+          GH_TOKEN: ${{ steps.app-token-docs.outputs.token }}
+          DISPLAY_DATE: ${{ env.display_date }}
+        run: |
+          REPO_LIST=$(cat ../changelogs.json | jq -r '.[] | "- \(.display_name_zh) v\(.version)"')
+
+          cat > /tmp/pr-body.md <<BODY_EOF
+          ## Summary
+
+          - Auto-collected changelogs for release ${DISPLAY_DATE}
+          - Version table and CHANGELOG content generated
+          - **请在 release-notes.mdx 中精简"主要更新"部分**
+
+          ### 涉及组件
+
+          ${REPO_LIST}
+
+          ## Checklist
+
+          - [ ] 精简中文 Release Notes（删除冗余内容、合并相似项）
+          - [ ] 翻译并填写英文 Release Notes
+          - [ ] Preview 部署效果确认
+
+          ---
+
+          🤖 Generated by [Collect Changelogs Automation](https://github.com/wuji-technology/.github)
+          BODY_EOF
+
+          pr_url=$(gh pr create \
+            --title "docs: release notes ${{ env.display_date }}" \
+            --body-file /tmp/pr-body.md \
+            --base main \
+            --head "${{ env.branch_name }}")
+
+          echo "✅ PR 创建成功: $pr_url"
+          echo "pr_url=$pr_url" >> $GITHUB_OUTPUT
+
+      - name: Send Feishu notification
+        if: ${{ !inputs.dry_run && always() && steps.create-pr.outcome != 'skipped' }}
+        env:
+          WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
+          PR_URL: ${{ steps.create-pr.outputs.pr_url }}
+          DISPLAY_DATE: ${{ env.display_date }}
+          JOB_STATUS: ${{ job.status }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ "$JOB_STATUS" = "success" ]; then
+            TEMPLATE="green"
+            TITLE="📝 Release Notes PR 已创建"
+            STATUS="✅ 成功"
+          else
+            TEMPLATE="red"
+            TITLE="❌ Release Notes 生成失败"
+            STATUS="❌ 失败"
+          fi
+
+          REPO_LIST=$(cat changelogs.json 2>/dev/null | jq -r '.[] | "• \(.display_name_zh) v\(.version)"' 2>/dev/null || echo "• 解析失败")
+
+          JSON_PAYLOAD=$(jq -n \
+            --arg title "$TITLE" \
+            --arg template "$TEMPLATE" \
+            --arg date_info "**发布日期**: ${DISPLAY_DATE}" \
+            --arg status "**状态**: ${STATUS}" \
+            --arg repos "**涉及组件**:\n${REPO_LIST}" \
+            --arg reminder "⚠️ 请精简 CHANGELOG 原文后合并 PR" \
+            --arg pr_url "${PR_URL:-$RUN_URL}" \
+            '{
+              msg_type: "interactive",
+              card: {
+                header: {
+                  title: { content: $title, tag: "plain_text" },
+                  template: $template
+                },
+                elements: [
+                  { tag: "div", text: { tag: "lark_md", content: ($date_info + "\n" + $status) } },
+                  { tag: "hr" },
+                  { tag: "div", text: { tag: "lark_md", content: $repos } },
+                  { tag: "div", text: { tag: "lark_md", content: $reminder } },
+                  { tag: "action", actions: [{ tag: "button", text: { tag: "plain_text", content: "查看 PR" }, type: "primary", url: $pr_url }] },
+                  { tag: "note", elements: [{ tag: "plain_text", content: "🤖 Release Notes Automation" }] }
+                ]
+              }
+            }')
+
+          curl -sS --fail -X POST "$WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d "$JSON_PAYLOAD" > /dev/null
+
+          echo "✅ 飞书通知已发送"

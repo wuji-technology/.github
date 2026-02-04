@@ -1,0 +1,89 @@
+{
+  "components": {
+    "firmware": {
+      "display_name_zh": "固件",
+      "display_name_en": "Firmware",
+      "public_repo": null,
+      "changelog_path": null,
+      "update_method_zh": "通过 Wuji Hand Upgrader 更新",
+      "update_method_en": "Update via Wuji Hand Upgrader",
+      "order": 1
+    },
+    "wujihandpy": {
+      "display_name_zh": "Wuji Hand SDK",
+      "display_name_en": "Wuji Hand SDK",
+      "public_repo": "wujihandpy",
+      "changelog_path": "CHANGELOG.md",
+      "update_method_zh": "<ul><li>Python: `pip install --upgrade wujihandpy`</li><li>Cpp: [点击下载](https://github.com/wuji-technology/{public_repo}/releases/tag/v{version})</li></ul>",
+      "update_method_en": "<ul><li>Python: `pip install --upgrade wujihandpy`</li><li>Cpp: [Click to download](https://github.com/wuji-technology/{public_repo}/releases/tag/v{version})</li></ul>",
+      "order": 2
+    },
+    "wujihandros2": {
+      "display_name_zh": "Wuji Hand ROS2",
+      "display_name_en": "Wuji Hand ROS2",
+      "public_repo": "wujihandros2",
+      "changelog_path": "CHANGELOG.md",
+      "update_method_zh": "[点击下载](https://github.com/wuji-technology/{public_repo}/releases/tag/v{version})",
+      "update_method_en": "[Click to download](https://github.com/wuji-technology/{public_repo}/releases/tag/v{version})",
+      "order": 3
+    },
+    "wuji-hand-description": {
+      "display_name_zh": "Wuji Hand Description",
+      "display_name_en": "Wuji Hand Description",
+      "public_repo": "wuji-hand-description",
+      "changelog_path": "CHANGELOG.md",
+      "update_method_zh": "[点击下载](https://github.com/wuji-technology/{public_repo}/releases/tag/v{version})",
+      "update_method_en": "[Click to download](https://github.com/wuji-technology/{public_repo}/releases/tag/v{version})",
+      "order": 4
+    },
+    "wujihand-upgrader-dev": {
+      "display_name_zh": "Wuji Hand Upgrader",
+      "display_name_en": "Wuji Hand Upgrader",
+      "public_repo": "wujihand-upgrader",
+      "changelog_path": "CHANGELOG.md",
+      "update_method_zh": "[点击下载](https://github.com/wuji-technology/{public_repo}/releases/tag/v{version})",
+      "update_method_en": "[Click to download](https://github.com/wuji-technology/{public_repo}/releases/tag/v{version})",
+      "order": 5
+    },
+    "wujihand-hmi-dev": {
+      "display_name_zh": "Wuji Hand HMI",
+      "display_name_en": "Wuji Hand HMI",
+      "public_repo": "wujihand-hmi",
+      "changelog_path": "CHANGELOG.md",
+      "update_method_zh": "[点击下载](https://github.com/wuji-technology/{public_repo}/releases/tag/v{version})",
+      "update_method_en": "[Click to download](https://github.com/wuji-technology/{public_repo}/releases/tag/v{version})",
+      "order": 6
+    },
+    "isaaclab-sim": {
+      "display_name_zh": "Isaac Sim",
+      "display_name_en": "Isaac Sim",
+      "public_repo": "isaaclab-sim",
+      "changelog_path": "CHANGELOG.md",
+      "update_method_zh": "[点击下载](https://github.com/wuji-technology/{public_repo}/releases/tag/v{version})",
+      "update_method_en": "[Click to download](https://github.com/wuji-technology/{public_repo}/releases/tag/v{version})",
+      "order": 7
+    },
+    "mujoco-sim": {
+      "display_name_zh": "MuJoCo Sim",
+      "display_name_en": "MuJoCo Sim",
+      "public_repo": "mujoco-sim",
+      "changelog_path": "CHANGELOG.md",
+      "update_method_zh": "[点击下载](https://github.com/wuji-technology/{public_repo}/releases/tag/v{version})",
+      "update_method_en": "[Click to download](https://github.com/wuji-technology/{public_repo}/releases/tag/v{version})",
+      "order": 8
+    },
+    "wuji-retargeting-private": {
+      "display_name_zh": "Wuji Retargeting",
+      "display_name_en": "Wuji Retargeting",
+      "public_repo": "wuji-retargeting",
+      "changelog_path": "public/CHANGELOG.md",
+      "update_method_zh": "[点击下载](https://github.com/wuji-technology/{public_repo}/releases/tag/v{version})",
+      "update_method_en": "[Click to download](https://github.com/wuji-technology/{public_repo}/releases/tag/v{version})",
+      "order": 9
+    }
+  },
+  "org": "wuji-technology",
+  "docs_repo": "wuji-docs-center",
+  "release_notes_path_zh": "content/docs/zh/wuji-hand/latest/release-notes.mdx",
+  "release_notes_path_en": "content/docs/en/wuji-hand/latest/release-notes.mdx"
+}
