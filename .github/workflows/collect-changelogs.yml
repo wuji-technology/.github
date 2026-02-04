@@ -75,6 +75,7 @@ jobs:
       - name: Fetch changelogs
         env:
           GITHUB_TOKEN: ${{ steps.app-token-source.outputs.token }}
+          RELEASE_DATE: ${{ inputs.release_date }}
         run: |
           cat repos.json | python3 scripts/fetch-changelogs.py > changelogs.json
           echo "✅ CHANGELOG 抓取完成"

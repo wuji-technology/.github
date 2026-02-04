@@ -9,6 +9,7 @@
 输出: 包含各仓库 CHANGELOG 内容的 JSON (stdout)
 """
 import base64
+import datetime
 import json
 import os
 import re
@@ -56,6 +57,51 @@ def fetch_changelog_from_tag(repo, version, changelog_path, token):
     if data is None:
         print(f"⚠️  {repo}: tag {tag} 或 {changelog_path} 不存在", file=sys.stderr)
         return None
+
+    content = data.get("content", "")
+    encoding = data.get("encoding", "")
+    if encoding == "base64":
+        try:
+            return base64.b64decode(content).decode("utf-8")
+        except UnicodeDecodeError:
+            print(f"⚠️  {repo}: CHANGELOG 非 UTF-8，已跳过", file=sys.stderr)
+            return None
+
+    print(f"⚠️  {repo}: 未知编码格式 {encoding}", file=sys.stderr)
+    return None
+
+
+def get_latest_tag_info(repo, token):
+    """
+    获取仓库最新 tag 的版本号和日期
+
+    Args:
+        repo: 仓库名
+        token: GitHub token
+
+    Returns:
+        (version, date_str) 元组，version 不含 v 前缀，date_str 为 YYYY-MM-DD 格式
+        如果没有 tag 则返回 (None, None)
+    """
+    # 获取最新 tag
+    endpoint = f"/repos/{ORG}/{repo}/tags?per_page=1"
+    tags = github_api(endpoint, token)
+    if not tags:
+        return None, None
+
+    tag_name = tags[0]["name"]
+    version = tag_name.lstrip("v")
+
+    # 获取 tag 对应的 commit 日期
+    sha = tags[0]["commit"]["sha"]
+    commit_endpoint = f"/repos/{ORG}/{repo}/git/commits/{sha}"
+    commit_data = github_api(commit_endpoint, token)
+    if not commit_data:
+        return version, None
+
+    # 解析日期 (格式: 2026-02-02T01:46:19Z)
+    date_str = commit_data.get("committer", {}).get("date", "")[:10]
+    return version, date_str
 
     content = data.get("content", "")
     encoding = data.get("encoding", "")
@@ -140,6 +186,8 @@ def main():
         print("❌ 错误: 需要设置 GITHUB_TOKEN 环境变量", file=sys.stderr)
         sys.exit(1)
 
+    release_date = os.environ.get("RELEASE_DATE", "")
+
     # 读取配置
     config_path = os.path.join(os.path.dirname(__file__), "release-notes-config.json")
     with open(config_path, encoding="utf-8") as f:
@@ -147,6 +195,45 @@ def main():
 
     # 从 stdin 读取仓库列表 (parse-repos.py 的输出格式)
     repos_input = json.loads(sys.stdin.read())
+
+    # 收集已输入的 repo 名称
+    input_repos = {item["repo"] for item in repos_input}
+
+    # 自动检测 auto_detect 组件
+    for component_name, component in config["components"].items():
+        if not component.get("auto_detect"):
+            continue
+        if component_name in input_repos:
+            continue  # 已手动指定，跳过自动检测
+
+        source_repo = component.get("source_repo", component_name)
+        print(f"🔍 自动检测 {component_name}（from {source_repo}）...", file=sys.stderr)
+
+        version, tag_date = get_latest_tag_info(source_repo, token)
+        if version is None:
+            print(f"  ⚠️  未找到 tag，跳过", file=sys.stderr)
+            continue
+
+        # 检查 tag 日期是否匹配发布日期
+        if release_date:
+            if tag_date != release_date:
+                print(f"  ⚠️  最新 tag v{version}（{tag_date}）与发布日期 {release_date} 不匹配，跳过", file=sys.stderr)
+                continue
+        # 如果没有指定发布日期，使用今天
+        else:
+            today = datetime.date.today().isoformat()
+            # 允许今天或昨天的 tag
+            yesterday = (datetime.date.today() - datetime.timedelta(days=1)).isoformat()
+            if tag_date not in (today, yesterday):
+                print(f"  ⚠️  最新 tag v{version}（{tag_date}）不在近两天内，跳过", file=sys.stderr)
+                continue
+
+        print(f"  ✅ 发现匹配的 tag v{version}（{tag_date}），自动添加", file=sys.stderr)
+        repos_input.append({
+            "repo": component_name,
+            "version": version,
+            "changelog_path": component.get("changelog_path", "CHANGELOG.md"),
+        })
 
     results = []
     for item in repos_input:
