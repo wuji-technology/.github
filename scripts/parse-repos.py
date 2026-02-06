@@ -2,10 +2,12 @@
 """
 解析多行文本格式的仓库版本配置
 
-格式: repo=version 或 repo=version:changelog_path，每行一个
+格式: repo=version 或 repo=version:changelog_path 或 repo=version:changelog_path:public_changelog_path
+每行一个
 示例:
     wujihandpy=1.5.0
     wuji-retargeting-private=0.2.0:public/CHANGELOG.md
+    wuji-sdk-dev=0.5.0:CHANGELOG.md:public/CHANGELOG.md
 """
 import json
 import re
@@ -15,9 +17,9 @@ from pathlib import PurePosixPath
 
 def parse_repos(input_text):
     """
-    解析格式: repo1=1.5.0\nrepo2=2.0.0:public/CHANGELOG.md
+    解析格式: repo1=1.5.0\nrepo2=2.0.0:public/CHANGELOG.md\nrepo3=0.5.0:CHANGELOG.md:public/CHANGELOG.md
     也支持空格分隔（GitHub Actions 可能把换行变成空格）
-    返回: [{"repo": "repo1", "version": "1.5.0", "changelog_path": "CHANGELOG.md"}, ...]
+    返回: [{"repo": "repo1", "version": "1.5.0", "changelog_path": "CHANGELOG.md", "public_changelog_path": ""}, ...]
     """
     result = []
 
@@ -40,14 +42,16 @@ def parse_repos(input_text):
         repo, value = match.groups()
         value = value.strip()
 
-        # 拆分 version 和可选的 changelog_path
-        if ':' in value:
-            version, changelog_path = value.split(':', 1)
-            version = version.strip()
-            changelog_path = changelog_path.strip()
-        else:
-            version = value
-            changelog_path = "CHANGELOG.md"
+        # 拆分 version 和可选的 changelog_path、public_changelog_path
+        parts = value.split(':')
+        if len(parts) > 3:
+            raise ValueError(
+                f"第 {line_num} 行格式错误: {line}\n"
+                f"最多支持三段: repo=version:changelog_path:public_changelog_path"
+            )
+        version = parts[0].strip()
+        changelog_path = parts[1].strip() if len(parts) > 1 else "CHANGELOG.md"
+        public_changelog_path = parts[2].strip() if len(parts) > 2 else ""
 
         # 验证版本号格式 (X.Y.Z 或 X.Y.Z-suffix)
         if not re.match(r'^\d+\.\d+\.\d+(-[a-zA-Z0-9.]+)?$', version):
@@ -63,7 +67,20 @@ def parse_repos(input_text):
         if not changelog_path.endswith('.md'):
             raise ValueError(f"第 {line_num} 行 CHANGELOG 路径必须以 .md 结尾: {changelog_path}")
 
-        result.append({"repo": repo.strip(), "version": version, "changelog_path": changelog_path})
+        # 验证 public_changelog_path（可选）
+        if public_changelog_path:
+            pub_path = PurePosixPath(public_changelog_path)
+            if pub_path.is_absolute() or ".." in pub_path.parts:
+                raise ValueError(f"第 {line_num} 行公开 CHANGELOG 路径必须为仓库内相对路径且不得包含 .. : {public_changelog_path}")
+            if not public_changelog_path.endswith('.md'):
+                raise ValueError(f"第 {line_num} 行公开 CHANGELOG 路径必须以 .md 结尾: {public_changelog_path}")
+
+        result.append({
+            "repo": repo.strip(),
+            "version": version,
+            "changelog_path": changelog_path,
+            "public_changelog_path": public_changelog_path,
+        })
 
     if not result:
         raise ValueError("未找到有效的仓库配置，请至少提供一个 repo=version 行")
