@@ -105,6 +105,28 @@ jobs:
             --version ${{ matrix.version }} \
             $date_arg
 
+      - name: Update public CHANGELOG.md
+        if: ${{ matrix.public_changelog_path != '' }}
+        working-directory: target-repo
+        env:
+          RELEASE_DATE: ${{ inputs.release_date }}
+          PUBLIC_CHANGELOG_PATH: ${{ matrix.public_changelog_path }}
+        run: |
+          if [ ! -f "$PUBLIC_CHANGELOG_PATH" ]; then
+            echo "❌ 错误: $PUBLIC_CHANGELOG_PATH 不存在"
+            exit 1
+          fi
+
+          date_arg=""
+          if [ -n "$RELEASE_DATE" ]; then
+            date_arg="--date $RELEASE_DATE"
+          fi
+
+          python3 ../.github-repo/scripts/update-changelog.py \
+            --file "$PUBLIC_CHANGELOG_PATH" \
+            --version ${{ matrix.version }} \
+            $date_arg
+
       - name: Create release branch
         if: ${{ !inputs.dry_run }}
         working-directory: target-repo
@@ -117,6 +139,9 @@ jobs:
           branch_name="release/v${VERSION}"
           git checkout -b "$branch_name"
           git add "${{ matrix.changelog_path }}"
+          if [ -n "${{ matrix.public_changelog_path }}" ]; then
+            git add "${{ matrix.public_changelog_path }}"
+          fi
           git commit -m "release: v${VERSION}
 
           Update CHANGELOG.md for v${VERSION} release"
