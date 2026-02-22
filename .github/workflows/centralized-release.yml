@@ -127,6 +127,22 @@ jobs:
             --version ${{ matrix.version }} \
             $date_arg
 
+      - name: Update version files
+        if: ${{ !inputs.dry_run }}
+        working-directory: target-repo
+        env:
+          VERSION: ${{ matrix.version }}
+        run: |
+          if [ -f ".release.yml" ]; then
+            echo "📦 发现 .release.yml，更新版本号文件..."
+            pip install pyyaml -q
+            python3 ../.github-repo/scripts/update-versions.py \
+              --config .release.yml \
+              --version "$VERSION"
+          else
+            echo "ℹ️ 未发现 .release.yml，跳过版本号更新"
+          fi
+
       - name: Create release branch
         if: ${{ !inputs.dry_run }}
         working-directory: target-repo
@@ -142,9 +158,20 @@ jobs:
           if [ -n "${{ matrix.public_changelog_path }}" ]; then
             git add "${{ matrix.public_changelog_path }}"
           fi
+          if [ -f ".release.yml" ]; then
+            python3 -c "
+          import yaml
+          with open('.release.yml') as f:
+              config = yaml.safe_load(f)
+          for entry in config.get('version_files', []):
+              print(entry['path'])
+          " | while read -r vfile; do
+              [ -f "$vfile" ] && git add "$vfile" && echo "  📦 Staged: $vfile"
+            done
+          fi
           git commit -m "release: v${VERSION}
 
-          Update CHANGELOG.md for v${VERSION} release"
+          Update CHANGELOG.md and version files for v${VERSION} release"
 
           git push origin "$branch_name"
           echo "✅ 已推送分支: $branch_name"
@@ -166,12 +193,26 @@ jobs:
             date_info="- **计划发布日期**: ${RELEASE_DATE}"
           fi
 
+          # 生成版本文件列表
+          version_files_info=""
+          if [ -f ".release.yml" ]; then
+            vfiles=$(python3 -c "
+          import yaml
+          with open('.release.yml') as f:
+              config = yaml.safe_load(f)
+          paths = [e['path'] for e in config.get('version_files', [])]
+          print(', '.join(f'\`{p}\`' for p in paths))
+          ")
+            version_files_info="
+          - 更新版本号文件: ${vfiles}"
+          fi
+
           pr_body="## Release v${VERSION}
 
           此 PR 由集中式 Release 自动化流程创建。
 
           ### 变更内容
-          - 更新 CHANGELOG.md，将 Unreleased 替换为 v${VERSION}
+          - 更新 CHANGELOG.md，将 Unreleased 替换为 v${VERSION}${version_files_info}
           ${date_info}
 
           ### 后续步骤
@@ -194,9 +235,21 @@ jobs:
 
       - name: Dry run summary
         if: ${{ inputs.dry_run }}
+        working-directory: target-repo
+        env:
+          VERSION: ${{ matrix.version }}
         run: |
           echo "🔍 Dry run 模式，不创建 PR"
           echo "✅ CHANGELOG 更新成功"
+          if [ -f ".release.yml" ]; then
+            echo ""
+            echo "📦 版本号文件更新预览:"
+            pip install pyyaml -q 2>/dev/null
+            python3 ../.github-repo/scripts/update-versions.py \
+              --config .release.yml \
+              --version "$VERSION" \
+              --dry-run
+          fi
           echo ""
           echo "如需实际创建 PR，请取消勾选 dry_run 选项"
 
