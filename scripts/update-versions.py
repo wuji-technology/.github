@@ -98,6 +98,12 @@ def update_versions(config_path, version, dry_run=False):
 
     # 校验所有规则
     for entry in version_files:
+        if not isinstance(entry, dict):
+            return {
+                "success": False,
+                "message": f"version_files 条目必须为对象: {entry}",
+                "updated": [],
+            }
         if 'path' not in entry or 'pattern' not in entry:
             return {
                 "success": False,

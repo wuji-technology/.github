@@ -201,7 +201,7 @@ jobs:
           with open('.release.yml') as f:
               config = yaml.safe_load(f)
           paths = [e['path'] for e in config.get('version_files', [])]
-          print(', '.join(f'\`{p}\`' for p in paths))
+          print(', '.join(f'`{p}`' for p in paths))
           ")
             version_files_info=$'\n- 更新版本号文件: '"${vfiles}"
           fi
