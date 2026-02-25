@@ -127,8 +127,8 @@ def update_versions(config_path, version, dry_run=False):
                 "updated": [],
             }
 
-    # 执行替换
-    updated = []
+    # 阶段 1：预读并生成所有替换结果，遇错立即返回（无副作用）
+    pending_writes = []  # list of (file_path, new_content, entry_path)
     config_dir = config_file.parent
 
     for entry in version_files:
@@ -139,7 +139,7 @@ def update_versions(config_path, version, dry_run=False):
             return {
                 "success": False,
                 "message": f"文件不存在: {entry['path']}",
-                "updated": updated,
+                "updated": [],
             }
 
         try:
@@ -148,7 +148,7 @@ def update_versions(config_path, version, dry_run=False):
             return {
                 "success": False,
                 "message": f"读取文件失败 ({entry['path']}): {e}",
-                "updated": updated,
+                "updated": [],
             }
 
         replacement = rf'\g<1>{version}\g<2>'
@@ -160,32 +160,39 @@ def update_versions(config_path, version, dry_run=False):
             return {
                 "success": False,
                 "message": f"未匹配到版本号 ({entry['path']}): pattern={pattern}",
-                "updated": updated,
+                "updated": [],
             }
 
         if dry_run:
-            # 找到被替换的行用于预览
             match = re.search(pattern, content, re.MULTILINE)
             old_line = match.group(0).strip() if match else "?"
             new_match = re.search(pattern, new_content, re.MULTILINE)
             new_line = new_match.group(0).strip() if new_match else "?"
             print(f"  📦 [DRY RUN] {entry['path']}: {old_line} → {new_line}")
         else:
-            try:
-                file_path.write_text(new_content, encoding='utf-8')
-            except OSError as e:
-                return {
-                    "success": False,
-                    "message": f"写入文件失败 ({entry['path']}): {e}",
-                    "updated": updated,
-                }
-            print(f"  📦 已更新: {entry['path']} → {version}")
+            pending_writes.append((file_path, new_content, entry['path']))
 
-        updated.append(entry['path'])
+    # 阶段 2：统一写入（仅 non-dry-run 且所有预检通过后执行）
+    updated = []
+    for file_path, new_content, entry_path in pending_writes:
+        try:
+            file_path.write_text(new_content, encoding='utf-8')
+        except OSError as e:
+            return {
+                "success": False,
+                "message": f"写入文件失败 ({entry_path}): {e}",
+                "updated": updated,
+            }
+        print(f"  📦 已更新: {entry_path} → {version}")
+        updated.append(entry_path)
 
+    if dry_run:
+        updated = [e['path'] for e in version_files]
+
+    action = "预览" if dry_run else "更新"
     return {
         "success": True,
-        "message": f"成功更新 {len(updated)} 个版本号文件",
+        "message": f"成功{action} {len(updated)} 个版本号文件",
         "updated": updated,
     }
 
