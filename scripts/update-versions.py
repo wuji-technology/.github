@@ -74,7 +74,7 @@ def update_versions(config_path, version, dry_run=False):
     try:
         with open(config_file, encoding='utf-8') as f:
             config = yaml.safe_load(f)
-    except Exception as e:
+    except (OSError, yaml.YAMLError) as e:
         return {
             "success": False,
             "message": f"读取配置文件失败: {e}",
@@ -138,7 +138,7 @@ def update_versions(config_path, version, dry_run=False):
 
         try:
             content = file_path.read_text(encoding='utf-8')
-        except Exception as e:
+        except OSError as e:
             return {
                 "success": False,
                 "message": f"读取文件失败 ({entry['path']}): {e}",
@@ -161,12 +161,13 @@ def update_versions(config_path, version, dry_run=False):
             # 找到被替换的行用于预览
             match = re.search(pattern, content, re.MULTILINE)
             old_line = match.group(0).strip() if match else "?"
-            new_match = re.search(pattern.replace('[^"]+', re.escape(version)), new_content, re.MULTILINE)
-            print(f"  📦 [DRY RUN] {entry['path']}: {old_line} → version={version}")
+            new_match = re.search(pattern, new_content, re.MULTILINE)
+            new_line = new_match.group(0).strip() if new_match else "?"
+            print(f"  📦 [DRY RUN] {entry['path']}: {old_line} → {new_line}")
         else:
             try:
                 file_path.write_text(new_content, encoding='utf-8')
-            except Exception as e:
+            except OSError as e:
                 return {
                     "success": False,
                     "message": f"写入文件失败 ({entry['path']}): {e}",
