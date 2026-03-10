@@ -103,6 +103,7 @@ jobs:
           python3 ../.github-repo/scripts/update-changelog.py \
             --file "$CHANGELOG_PATH" \
             --version ${{ matrix.version }} \
+            --repo ${{ matrix.repo }} \
             $date_arg
 
       - name: Update public CHANGELOG.md
@@ -125,6 +126,7 @@ jobs:
           python3 ../.github-repo/scripts/update-changelog.py \
             --file "$PUBLIC_CHANGELOG_PATH" \
             --version ${{ matrix.version }} \
+            --repo ${{ matrix.repo }} \
             $date_arg
 
       - name: Update version files
