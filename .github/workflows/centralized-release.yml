@@ -112,6 +112,7 @@ jobs:
         env:
           RELEASE_DATE: ${{ inputs.release_date }}
           PUBLIC_CHANGELOG_PATH: ${{ matrix.public_changelog_path }}
+          REPO_NAME: ${{ matrix.repo }}
         run: |
           if [ ! -f "$PUBLIC_CHANGELOG_PATH" ]; then
             echo "❌ 错误: $PUBLIC_CHANGELOG_PATH 不存在"
@@ -123,10 +124,13 @@ jobs:
             date_arg="--date $RELEASE_DATE"
           fi
 
+          # 公开 CHANGELOG 链接指向去掉 -dev/-private 后缀的公开仓库
+          PUBLIC_REPO=$(echo "$REPO_NAME" | sed -E 's/-(dev|private)$//')
+
           python3 ../.github-repo/scripts/update-changelog.py \
             --file "$PUBLIC_CHANGELOG_PATH" \
             --version ${{ matrix.version }} \
-            --repo ${{ matrix.repo }} \
+            --repo "$PUBLIC_REPO" \
             $date_arg
 
       - name: Update version files
