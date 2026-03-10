@@ -13,8 +13,8 @@ from pathlib import Path
 
 def _find_previous_version(content, current_version):
     """从 CHANGELOG 内容中找到当前版本之后的上一个版本号"""
-    # 匹配所有 ## [x.y.z] 格式的版本标题
-    versions = re.findall(r'## \[(\d+\.\d+\.\d+(?:-[a-zA-Z0-9.]+)?)\]', content)
+    # 匹配所有 ## [x.y.z] 格式的版本标题（支持完整 SemVer：prerelease + build metadata）
+    versions = re.findall(r'## \[(\d+\.\d+\.\d+(?:-[a-zA-Z0-9._-]+)?(?:\+[a-zA-Z0-9._-]+)?)\]', content)
     for i, v in enumerate(versions):
         if v == current_version and i + 1 < len(versions):
             return versions[i + 1]
