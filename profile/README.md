@@ -48,6 +48,7 @@
 | **Wuji Studio** | Desktop app for calibration, monitoring & debugging | [Docs](https://docs.wuji.tech/docs/en/wuji-studio/latest) |
 | **Wuji SDK** | Unified API for all Wuji devices | [Docs](https://docs.wuji.tech/docs/en/wuji-sdk/latest) |
 
+Explore all repositories at [github.com/wuji-technology](https://github.com/orgs/wuji-technology/repositories).
 
 ## Get Involved
 
