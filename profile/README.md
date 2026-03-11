@@ -1,11 +1,11 @@
 <div align="center">
   <img src="../images/logo.png" height="160" alt="Wuji Technology">
-  <h3>Advancing Dexterous Manipulation</h3>
+  <h3>From Hand to Mind</h3>
 </div>
 
 <p align="center">
-  We build high-DOF dexterous hands and the software stack to control them.<br>
-  Our mission: accelerate dexterous manipulation and embodied AI for everyone.
+  We build high-DOF dexterous hands, data gloves, and a unified software stack for control and teleoperation.<br>
+  Our mission is to accelerate progress of dexterous manipulation and embodied AI.
 </p>
 
 <p align="center">
@@ -20,36 +20,34 @@
 
 ## Product Ecosystem
 
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://www.youtube.com/watch?v=LXVV-oErD8s">
+        <img src="https://img.youtube.com/vi/LXVV-oErD8s/maxresdefault.jpg" width="400" alt="Wuji Hand">
+      </a>
+      <br>
+      <strong>Wuji Hand</strong> — High-DOF dexterous hand
+      <br>
+      <a href="https://docs.wuji.tech/docs/en/wuji-hand/latest">Docs</a>
+    </td>
+    <td align="center">
+      <a href="https://www.youtube.com/watch?v=NE5FytzRz_E">
+        <img src="https://img.youtube.com/vi/NE5FytzRz_E/maxresdefault.jpg" width="400" alt="Wuji Glove">
+      </a>
+      <br>
+      <strong>Wuji Glove</strong> — Data glove for teleoperation
+      <br>
+      <a href="https://docs.wuji.tech/docs/en/wuji-glove/latest">Docs</a>
+    </td>
+  </tr>
+</table>
+
 | Product | What It Does | Links |
 |---------|-------------|-------|
-| **Wuji Hand** | High-DOF dexterous hand hardware | [Docs](https://docs.wuji.tech/docs/en/wuji-hand/latest) |
-| **Wuji Glove** | Data glove for teleoperation & motion capture | [Docs](https://docs.wuji.tech/docs/en/wuji-glove/latest) |
 | **Wuji Studio** | Desktop app for calibration, monitoring & debugging | [Docs](https://docs.wuji.tech/docs/en/wuji-studio/latest) |
 | **Wuji SDK** | Unified API for all Wuji devices | [Docs](https://docs.wuji.tech/docs/en/wuji-sdk/latest) |
 
-## Open Source
-
-**Control & Integration**
-- [`wujihandpy`](https://github.com/wuji-technology/wujihandpy) — C++ core SDK with Python bindings
-- [`wujihandros2`](https://github.com/wuji-technology/wujihandros2) — ROS 2 driver with 1 kHz joint state publishing
-
-**Simulation**
-- [`wuji-hand-description`](https://github.com/wuji-technology/wuji-hand-description) — URDF & MuJoCo models
-- [`mujoco-sim`](https://github.com/wuji-technology/mujoco-sim) — MuJoCo simulation demo
-- [`isaaclab-sim`](https://github.com/wuji-technology/isaaclab-sim) — Isaac Sim integration
-
-**Teleoperation**
-- [`wuji-retargeting`](https://github.com/wuji-technology/wuji-retargeting) — Hand retargeting with Apple Vision Pro support
-
-**Tools**
-- [`wujihand-hmi`](https://github.com/wuji-technology/wujihand-hmi) — Real-time monitoring & calibration
-- [`wujihand-upgrader`](https://github.com/wuji-technology/wujihand-upgrader) — Firmware upgrade tool
-
-**Hardware**
-- [`wujihand-hardware-design`](https://github.com/wuji-technology/wujihand-hardware-design) — Adapter mounts, structural frames & softgoods in STEP format
-
-**Education**
-- [`robotics-rigid-body-mechanics`](https://github.com/wuji-technology/robotics-rigid-body-mechanics) — Lecture notes on rigid body mechanics
 
 ## Get Involved
 
