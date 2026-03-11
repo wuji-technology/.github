@@ -53,6 +53,6 @@
 
 ## Get Involved
 
-- **Technical support** — [support@wuji.tech](mailto:support@wuji.tech) or [open an issue](https://github.com/wuji-technology)
+- **Technical support** — [support@wuji.tech](mailto:support@wuji.tech) or open an issue in the relevant repo
 - **Sales & partnerships** — [sales@wuji.tech](mailto:sales@wuji.tech)
 - **Join us** (we hire internationally) — [hr@wuji.tech](mailto:hr@wuji.tech)
