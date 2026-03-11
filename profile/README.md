@@ -1,6 +1,5 @@
 <div align="center">
-  <img src="../images/logo.png" height="160" alt="Wuji Technology">
-  <h3>From Hand to Mind</h3>
+  <img src="../images/logo.png" height="240" alt="Wuji Technology">
 </div>
 
 <p align="center">
@@ -9,46 +8,53 @@
 </p>
 
 <p align="center">
-  <a href="https://wuji.tech">Website</a> ·
-  <a href="https://docs.wuji.tech">Docs</a> ·
-  <a href="https://x.com/wuji_global">X</a> ·
-  <a href="https://youtube.com/@WUJI_TECH">YouTube</a> ·
-  <a href="https://space.bilibili.com/3546938664291159">Bilibili</a>
+  <a href="https://wuji.tech"><img src="https://img.shields.io/badge/Website-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Website"></a>
+  <a href="https://docs.wuji.tech"><img src="https://img.shields.io/badge/Docs-008000?style=for-the-badge&logo=readthedocs&logoColor=white" alt="Docs"></a>
+  <a href="https://x.com/wuji_global"><img src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white" alt="X"></a>
+  <a href="https://youtube.com/@WUJI_TECH"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube"></a>
+  <a href="https://space.bilibili.com/3546938664291159"><img src="https://img.shields.io/badge/Bilibili-00A1D6?style=for-the-badge&logo=bilibili&logoColor=white" alt="Bilibili"></a>
 </p>
-
----
 
 ## Product Ecosystem
 
 <table>
   <tr>
-    <td align="center">
+    <td align="center" width="50%">
       <a href="https://www.youtube.com/watch?v=LXVV-oErD8s">
-        <img src="https://img.youtube.com/vi/LXVV-oErD8s/maxresdefault.jpg" width="400" alt="Wuji Hand">
+        <img src="https://img.youtube.com/vi/LXVV-oErD8s/maxresdefault.jpg" width="100%" alt="Wuji Hand">
       </a>
       <br>
-      <strong>Wuji Hand</strong> — High-DOF dexterous hand
-      <br>
-      <a href="https://docs.wuji.tech/docs/en/wuji-hand/latest">Docs</a>
+      <a href="https://docs.wuji.tech/docs/en/wuji-hand/latest">
+        <strong>Wuji Hand</strong><br>
+        <sub>High-DOF dexterous hand</sub>
+      </a>
     </td>
-    <td align="center">
+    <td align="center" width="50%">
       <a href="https://www.youtube.com/watch?v=NE5FytzRz_E">
-        <img src="https://img.youtube.com/vi/NE5FytzRz_E/maxresdefault.jpg" width="400" alt="Wuji Glove">
+        <img src="https://img.youtube.com/vi/NE5FytzRz_E/maxresdefault.jpg" width="100%" alt="Wuji Glove">
       </a>
       <br>
-      <strong>Wuji Glove</strong> — Data glove for teleoperation
-      <br>
-      <a href="https://docs.wuji.tech/docs/en/wuji-glove/latest">Docs</a>
+      <a href="https://docs.wuji.tech/docs/en/wuji-glove/latest">
+        <strong>Wuji Glove</strong><br>
+        <sub>Data glove for teleoperation</sub>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%" height="120">
+      <a href="https://docs.wuji.tech/docs/en/wuji-studio/latest">
+        <strong>Wuji Studio</strong><br>
+        <sub>Desktop app for calibration & debugging</sub>
+      </a>
+    </td>
+    <td align="center" width="50%" height="120">
+      <a href="https://docs.wuji.tech/docs/en/wuji-sdk/latest">
+        <strong>Wuji SDK</strong><br>
+        <sub>Unified API for all Wuji devices</sub>
+      </a>
     </td>
   </tr>
 </table>
-
-| Product | What It Does | Links |
-|---------|-------------|-------|
-| **Wuji Studio** | Desktop app for calibration, monitoring & debugging | [Docs](https://docs.wuji.tech/docs/en/wuji-studio/latest) |
-| **Wuji SDK** | Unified API for all Wuji devices | [Docs](https://docs.wuji.tech/docs/en/wuji-sdk/latest) |
-
-Explore all repositories at [github.com/wuji-technology](https://github.com/orgs/wuji-technology/repositories).
 
 ## Get Involved
 
