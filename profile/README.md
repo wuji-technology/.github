@@ -56,46 +56,58 @@
 
 <table>
   <tr>
-    <td width="120"><b>SDK</b></td>
-    <td>
-      <a href="https://github.com/wuji-technology/wuji-sdk" title="Automatic device discovery and real-time data streaming for all Wuji devices"><img src="https://img.shields.io/github/v/release/wuji-technology/wuji-sdk?style=flat-square&logo=github&label=wuji-sdk" alt="wuji-sdk"></a> - Automatic device discovery and real-time data streaming for all Wuji devices<br>
-      <a href="https://github.com/wuji-technology/wujihandpy" title="Python/C++ SDK for Wuji Hand device control"><img src="https://img.shields.io/github/v/release/wuji-technology/wujihandpy?style=flat-square&logo=github&label=wujihandpy" alt="wujihandpy"></a> - Python/C++ SDK for Wuji Hand device control<br>
-      <a href="https://github.com/wuji-technology/wujihandros2" title="ROS 2 driver with 1 kHz joint state publishing"><img src="https://img.shields.io/github/v/release/wuji-technology/wujihandros2?style=flat-square&logo=github&label=wujihandros2" alt="wujihandros2"></a> - ROS 2 driver with 1 kHz joint state publishing
-    </td>
+    <td rowspan="3" width="120"><b>SDK</b></td>
+    <td><a href="https://github.com/wuji-technology/wuji-sdk"><img src="https://img.shields.io/github/v/release/wuji-technology/wuji-sdk?style=flat-square&logo=github&label=wuji-sdk" alt="wuji-sdk"></a></td>
+    <td>Automatic device discovery and real-time data streaming for all Wuji devices</td>
   </tr>
   <tr>
-    <td><b>Tools</b></td>
-    <td>
-      <a href="https://github.com/wuji-technology/wuji-studio" title="Desktop application for all Wuji devices"><img src="https://img.shields.io/github/v/release/wuji-technology/wuji-studio?style=flat-square&logo=github&label=wuji-studio" alt="wuji-studio"></a> - Desktop application for all Wuji devices<br>
-      <a href="https://github.com/wuji-technology/wujihand-upgrader" title="Firmware upgrade tool for Wuji Hand"><img src="https://img.shields.io/github/v/release/wuji-technology/wujihand-upgrader?style=flat-square&logo=github&label=wujihand-upgrader" alt="wujihand-upgrader"></a> - Firmware upgrade tool for Wuji Hand<br>
-      <a href="https://github.com/wuji-technology/wujihand-hmi" title="Real-time monitoring, calibration, and debugging for Wuji Hand"><img src="https://img.shields.io/github/v/release/wuji-technology/wujihand-hmi?style=flat-square&logo=github&label=wujihand-hmi" alt="wujihand-hmi"></a> - Real-time monitoring, calibration, and debugging for Wuji Hand
-    </td>
+    <td><a href="https://github.com/wuji-technology/wujihandpy"><img src="https://img.shields.io/github/v/release/wuji-technology/wujihandpy?style=flat-square&logo=github&label=wujihandpy" alt="wujihandpy"></a></td>
+    <td>Python/C++ SDK for Wuji Hand device control</td>
   </tr>
   <tr>
-    <td><b>Simulation</b></td>
-    <td>
-      <a href="https://github.com/wuji-technology/wuji-hand-description" title="URDF, MuJoCo MJCF, and mesh models"><img src="https://img.shields.io/github/v/release/wuji-technology/wuji-hand-description?style=flat-square&logo=github&label=wuji-hand-description" alt="wuji-hand-description"></a> - URDF, MuJoCo MJCF, and mesh models<br>
-      <a href="https://github.com/wuji-technology/mujoco-sim" title="MuJoCo simulation demo"><img src="https://img.shields.io/badge/mujoco--sim-repo-555?style=flat-square&logo=github" alt="mujoco-sim"></a> - MuJoCo simulation demo<br>
-      <a href="https://github.com/wuji-technology/isaaclab-sim" title="Isaac Lab simulation demo"><img src="https://img.shields.io/github/v/release/wuji-technology/isaaclab-sim?style=flat-square&logo=github&label=isaaclab-sim" alt="isaaclab-sim"></a> - Isaac Lab simulation demo
-    </td>
+    <td><a href="https://github.com/wuji-technology/wujihandros2"><img src="https://img.shields.io/github/v/release/wuji-technology/wujihandros2?style=flat-square&logo=github&label=wujihandros2" alt="wujihandros2"></a></td>
+    <td>ROS 2 driver with 1 kHz joint state publishing</td>
+  </tr>
+  <tr>
+    <td rowspan="3"><b>Tools</b></td>
+    <td><a href="https://github.com/wuji-technology/wuji-studio"><img src="https://img.shields.io/github/v/release/wuji-technology/wuji-studio?style=flat-square&logo=github&label=wuji-studio" alt="wuji-studio"></a></td>
+    <td>Desktop application for all Wuji devices</td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/wuji-technology/wujihand-upgrader"><img src="https://img.shields.io/github/v/release/wuji-technology/wujihand-upgrader?style=flat-square&logo=github&label=wujihand-upgrader" alt="wujihand-upgrader"></a></td>
+    <td>Firmware upgrade tool for Wuji Hand</td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/wuji-technology/wujihand-hmi"><img src="https://img.shields.io/github/v/release/wuji-technology/wujihand-hmi?style=flat-square&logo=github&label=wujihand-hmi" alt="wujihand-hmi"></a></td>
+    <td>Real-time monitoring, calibration, and debugging for Wuji Hand</td>
+  </tr>
+  <tr>
+    <td rowspan="3"><b>Simulation</b></td>
+    <td><a href="https://github.com/wuji-technology/wuji-hand-description"><img src="https://img.shields.io/github/v/release/wuji-technology/wuji-hand-description?style=flat-square&logo=github&label=wuji-hand-description" alt="wuji-hand-description"></a></td>
+    <td>URDF, MuJoCo MJCF, and mesh models</td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/wuji-technology/mujoco-sim"><img src="https://img.shields.io/badge/mujoco--sim-repo-555?style=flat-square&logo=github" alt="mujoco-sim"></a></td>
+    <td>MuJoCo simulation demo</td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/wuji-technology/isaaclab-sim"><img src="https://img.shields.io/github/v/release/wuji-technology/isaaclab-sim?style=flat-square&logo=github&label=isaaclab-sim" alt="isaaclab-sim"></a></td>
+    <td>Isaac Lab simulation demo</td>
   </tr>
   <tr>
     <td><b>Teleoperation</b></td>
-    <td>
-      <a href="https://github.com/wuji-technology/wuji-retargeting" title="Hand pose retargeting with Vision Pro support"><img src="https://img.shields.io/github/v/release/wuji-technology/wuji-retargeting?style=flat-square&logo=github&label=wuji-retargeting" alt="wuji-retargeting"></a> - Hand pose retargeting with Vision Pro support
-    </td>
+    <td><a href="https://github.com/wuji-technology/wuji-retargeting"><img src="https://img.shields.io/github/v/release/wuji-technology/wuji-retargeting?style=flat-square&logo=github&label=wuji-retargeting" alt="wuji-retargeting"></a></td>
+    <td>Hand pose retargeting with Vision Pro support</td>
   </tr>
   <tr>
     <td><b>Hardware</b></td>
-    <td>
-      <a href="https://github.com/wuji-technology/wujihand-hardware-design" title="CAD files (STEP) for adapters, frames, and softgoods"><img src="https://img.shields.io/badge/wujihand--hardware--design-repo-555?style=flat-square&logo=github" alt="wujihand-hardware-design"></a> - CAD files (STEP) for adapters, frames, and softgoods
-    </td>
+    <td><a href="https://github.com/wuji-technology/wujihand-hardware-design"><img src="https://img.shields.io/badge/wujihand--hardware--design-repo-555?style=flat-square&logo=github" alt="wujihand-hardware-design"></a></td>
+    <td>CAD files (STEP) for adapters, frames, and softgoods</td>
   </tr>
   <tr>
     <td><b>Education</b></td>
-    <td>
-      <a href="https://github.com/wuji-technology/robotics-rigid-body-mechanics" title="Lecture notes on rotation, screw theory, dynamics, and multibody systems"><img src="https://img.shields.io/github/v/release/wuji-technology/robotics-rigid-body-mechanics?style=flat-square&logo=github&label=robotics-rigid-body-mechanics" alt="robotics-rigid-body-mechanics"></a> - Lecture notes on rotation, screw theory, dynamics, and multibody systems
-    </td>
+    <td><a href="https://github.com/wuji-technology/robotics-rigid-body-mechanics"><img src="https://img.shields.io/github/v/release/wuji-technology/robotics-rigid-body-mechanics?style=flat-square&logo=github&label=robotics-rigid-body-mechanics" alt="robotics-rigid-body-mechanics"></a></td>
+    <td>Lecture notes on rotation, screw theory, dynamics, and multibody systems</td>
   </tr>
 </table>
 
