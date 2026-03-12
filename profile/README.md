@@ -3,7 +3,8 @@
 </div>
 
 <p align="center">
-  We build high-DOF dexterous hands, data gloves, and a unified software stack to accelerate dexterous manipulation and embodied AI.
+  We build high-DOF dexterous hands, data gloves, and a unified software stack<br>
+  to accelerate dexterous manipulation and embodied AI.
 </p>
 
 <p align="center">
@@ -23,34 +24,30 @@
         <img src="https://img.youtube.com/vi/LXVV-oErD8s/maxresdefault.jpg" width="100%" alt="Wuji Hand">
       </a>
       <br>
-      <a href="https://docs.wuji.tech/docs/en/wuji-hand/latest">
-        <strong>Wuji Hand</strong><br>
-        <sub>High-DOF dexterous hand</sub>
-      </a>
+      <h3>Wuji Hand</h3>
+      High-DOF dexterous hand<br><br>
+      <a href="https://docs.wuji.tech/docs/en/wuji-hand/latest">Docs →</a>
     </td>
     <td align="center" width="50%">
       <a href="https://www.youtube.com/watch?v=NE5FytzRz_E">
         <img src="https://img.youtube.com/vi/NE5FytzRz_E/maxresdefault.jpg" width="100%" alt="Wuji Glove">
       </a>
       <br>
-      <a href="https://docs.wuji.tech/docs/en/wuji-glove/latest">
-        <strong>Wuji Glove</strong><br>
-        <sub>Data glove for teleoperation</sub>
-      </a>
+      <h3>Wuji Glove</h3>
+      Data glove for teleoperation<br><br>
+      <a href="https://docs.wuji.tech/docs/en/wuji-glove/latest">Docs →</a>
     </td>
   </tr>
   <tr>
     <td align="center" width="50%" height="120">
-      <a href="https://docs.wuji.tech/docs/en/wuji-studio/latest">
-        <strong>Wuji Studio</strong><br>
-        <sub>Desktop app for calibration & debugging</sub>
-      </a>
+      <h3>Wuji Studio</h3>
+      Desktop app for calibration & debugging<br><br>
+      <a href="https://docs.wuji.tech/docs/en/wuji-studio/latest">Docs →</a>
     </td>
     <td align="center" width="50%" height="120">
-      <a href="https://docs.wuji.tech/docs/en/wuji-sdk/latest">
-        <strong>Wuji SDK</strong><br>
-        <sub>Unified API for all Wuji devices</sub>
-      </a>
+      <h3>Wuji SDK</h3>
+      Unified API for all Wuji devices<br><br>
+      <a href="https://docs.wuji.tech/docs/en/wuji-sdk/latest">Docs →</a>
     </td>
   </tr>
 </table>
