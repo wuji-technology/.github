@@ -52,6 +52,53 @@
   </tr>
 </table>
 
+## Repositories
+
+<table>
+  <tr>
+    <td width="120"><b>SDK</b></td>
+    <td>
+      <a href="https://github.com/wuji-technology/wuji-sdk">wuji-sdk</a> <a href="https://github.com/wuji-technology/wuji-sdk/releases/latest"><img src="https://img.shields.io/github/v/release/wuji-technology/wuji-sdk?style=flat-square&label=" alt="release"></a> — Automatic device discovery and real-time data streaming for all Wuji devices<br>
+      <a href="https://github.com/wuji-technology/wujihandpy">wujihandpy</a> <a href="https://github.com/wuji-technology/wujihandpy/releases/latest"><img src="https://img.shields.io/github/v/release/wuji-technology/wujihandpy?style=flat-square&label=" alt="release"></a> — Python/C++ SDK for Wuji Hand device control<br>
+      <a href="https://github.com/wuji-technology/wujihandros2">wujihandros2</a> <a href="https://github.com/wuji-technology/wujihandros2/releases/latest"><img src="https://img.shields.io/github/v/release/wuji-technology/wujihandros2?style=flat-square&label=" alt="release"></a> — ROS 2 driver with 1 kHz joint state publishing
+    </td>
+  </tr>
+  <tr>
+    <td><b>Tools</b></td>
+    <td>
+      <a href="https://github.com/wuji-technology/wuji-studio">wuji-studio</a> <a href="https://github.com/wuji-technology/wuji-studio/releases/latest"><img src="https://img.shields.io/github/v/release/wuji-technology/wuji-studio?style=flat-square&label=" alt="release"></a> — Desktop application for all Wuji devices<br>
+      <a href="https://github.com/wuji-technology/wujihand-upgrader">wujihand-upgrader</a> <a href="https://github.com/wuji-technology/wujihand-upgrader/releases/latest"><img src="https://img.shields.io/github/v/release/wuji-technology/wujihand-upgrader?style=flat-square&label=" alt="release"></a> — Firmware upgrade tool for Wuji Hand<br>
+      <a href="https://github.com/wuji-technology/wujihand-hmi">wujihand-hmi</a> <a href="https://github.com/wuji-technology/wujihand-hmi/releases/latest"><img src="https://img.shields.io/github/v/release/wuji-technology/wujihand-hmi?style=flat-square&label=" alt="release"></a> — Real-time monitoring, calibration, and debugging for Wuji Hand
+    </td>
+  </tr>
+  <tr>
+    <td><b>Simulation</b></td>
+    <td>
+      <a href="https://github.com/wuji-technology/wuji-hand-description">wuji-hand-description</a> <a href="https://github.com/wuji-technology/wuji-hand-description/releases/latest"><img src="https://img.shields.io/github/v/release/wuji-technology/wuji-hand-description?style=flat-square&label=" alt="release"></a> — URDF, MuJoCo MJCF, and mesh models<br>
+      <a href="https://github.com/wuji-technology/mujoco-sim">mujoco-sim</a> — MuJoCo simulation demo<br>
+      <a href="https://github.com/wuji-technology/isaaclab-sim">isaaclab-sim</a> <a href="https://github.com/wuji-technology/isaaclab-sim/releases/latest"><img src="https://img.shields.io/github/v/release/wuji-technology/isaaclab-sim?style=flat-square&label=" alt="release"></a> — Isaac Lab simulation demo
+    </td>
+  </tr>
+  <tr>
+    <td><b>Teleoperation</b></td>
+    <td>
+      <a href="https://github.com/wuji-technology/wuji-retargeting">wuji-retargeting</a> <a href="https://github.com/wuji-technology/wuji-retargeting/releases/latest"><img src="https://img.shields.io/github/v/release/wuji-technology/wuji-retargeting?style=flat-square&label=" alt="release"></a> — Hand pose retargeting with Vision Pro support
+    </td>
+  </tr>
+  <tr>
+    <td><b>Hardware</b></td>
+    <td>
+      <a href="https://github.com/wuji-technology/wujihand-hardware-design">wujihand-hardware-design</a> — CAD files (STEP) for adapters, frames, and softgoods
+    </td>
+  </tr>
+  <tr>
+    <td><b>Education</b></td>
+    <td>
+      <a href="https://github.com/wuji-technology/robotics-rigid-body-mechanics">robotics-rigid-body-mechanics</a> <a href="https://github.com/wuji-technology/robotics-rigid-body-mechanics/releases/latest"><img src="https://img.shields.io/github/v/release/wuji-technology/robotics-rigid-body-mechanics?style=flat-square&label=" alt="release"></a> — Lecture notes on rotation, screw theory, dynamics, and multibody systems
+    </td>
+  </tr>
+</table>
+
 ## Get Involved
 
 - **Technical support** — [support@wuji.tech](mailto:support@wuji.tech) or open an issue in the relevant repo
