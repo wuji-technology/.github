@@ -5,6 +5,7 @@
     <img src="../images/wuji-logo-dark.svg" height="80" alt="Wuji Technology">
   </picture>
 </div>
+<br>
 
 <p align="center">
   We build high-DOF dexterous hands, data gloves, and a unified software stack<br>
@@ -99,9 +100,13 @@
     <td>Isaac Lab simulation demo</td>
   </tr>
   <tr>
-    <td align="center"><b>Teleoperation</b></td>
+    <td rowspan="2" align="center" valign="middle"><b>Teleoperation</b></td>
     <td align="center"><a href="https://github.com/wuji-technology/wuji-retargeting"><img src="https://img.shields.io/github/v/release/wuji-technology/wuji-retargeting?style=flat-square&logo=github&label=wuji-retargeting" alt="wuji-retargeting"></a></td>
     <td>Hand pose retargeting with Vision Pro support</td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/wuji-technology/wuji-hand-teleop"><img src="https://img.shields.io/github/v/release/wuji-technology/wuji-hand-teleop?style=flat-square&logo=github&label=wuji-hand-teleop" alt="wuji-hand-teleop"></a></td>
+    <td>ROS 2 teleoperation for Wuji Hand and robot arm with multiple input devices</td>
   </tr>
   <tr>
     <td align="center"><b>Hardware</b></td>
