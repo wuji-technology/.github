@@ -57,12 +57,9 @@
   </tr>
 </table>
 
-## Education
+## Resources
 
-<a href="https://github.com/wuji-technology/robotics-rigid-body-mechanics"><img src="https://img.shields.io/github/v/release/wuji-technology/robotics-rigid-body-mechanics?style=flat-square&logo=github&label=robotics-rigid-body-mechanics" alt="robotics-rigid-body-mechanics"></a> — Lecture notes on rotation, screw theory, dynamics, and multibody systems
-
-## Get Involved
-
+- <a href="https://github.com/wuji-technology/robotics-rigid-body-mechanics"><img src="https://img.shields.io/github/v/release/wuji-technology/robotics-rigid-body-mechanics?style=flat-square&logo=github&label=robotics-rigid-body-mechanics" alt="robotics-rigid-body-mechanics"></a> — Lecture notes on rotation, screw theory, dynamics, and multibody systems
 - **Technical support** — [support@wuji.tech](mailto:support@wuji.tech) or open an issue in the relevant repo
 - **Sales & partnerships** — [sales@wuji.tech](mailto:sales@wuji.tech)
 - **Join us** (we hire internationally) — [hr@wuji.tech](mailto:hr@wuji.tech)
