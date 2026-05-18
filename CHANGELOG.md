@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 
 - Fix newline handling in Feishu cards using jq for proper JSON payload construction
+- Fix `update-changelog.py` duplicating date for calendar-versioned repos: when version matches `YYYY.M.D` (e.g. `2026.05.18`), emit `## [2026.05.18]` instead of `## [2026.05.18] - 2026-05-18`; explicit `release_date` input is ignored with a stderr warning
 
 ## [1.0.2] - 2026-01-30
 
