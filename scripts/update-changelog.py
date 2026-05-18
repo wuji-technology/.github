@@ -11,6 +11,14 @@ from datetime import date
 from pathlib import Path
 
 
+_CALENDAR_VERSION_RE = re.compile(r'^\d{4}\.\d{1,2}\.\d{1,2}$')
+
+
+def _is_calendar_version(version):
+    """日历版号判定: YYYY.M.D / YYYY.MM.DD 等纯三段数字格式 (年份四位)"""
+    return bool(_CALENDAR_VERSION_RE.match(version))
+
+
 def _find_previous_version(content, current_version):
     """从 CHANGELOG 内容中找到当前版本之后的上一个版本号"""
     # 匹配所有 ## [x.y.z] 格式的版本标题（支持完整 SemVer：prerelease + build metadata）
@@ -34,7 +42,15 @@ def update_changelog(file_path, version, release_date=None, repo=None):
     Returns:
         {"success": bool, "message": str}
     """
-    if release_date is None:
+    calendar_version = _is_calendar_version(version)
+    if calendar_version:
+        if release_date:
+            print(
+                f"⚠️  版本 {version} 为日历版号，已忽略传入的 release_date={release_date}",
+                file=sys.stderr,
+            )
+        release_date = None
+    elif release_date is None:
         release_date = date.today().strftime('%Y-%m-%d')
 
     file_path = Path(file_path)
@@ -56,10 +72,11 @@ def update_changelog(file_path, version, release_date=None, repo=None):
     if re.search(version_pattern, content):
         return {"success": False, "message": f"版本 {version} 已存在"}
 
-    # 替换 Unreleased（第一个匹配项）
+    # 替换 Unreleased（第一个匹配项）。日历版号自带日期，不再追加 release_date。
+    new_heading = f'## [{version}]' if calendar_version else f'## [{version}] - {release_date}'
     content_new = re.sub(
         unreleased_pattern,
-        f'## [{version}] - {release_date}',
+        new_heading,
         content,
         count=1,
         flags=re.IGNORECASE
@@ -113,7 +130,10 @@ def update_changelog(file_path, version, release_date=None, repo=None):
 
     return {
         "success": True,
-        "message": f"成功: Unreleased → [{version}] - {release_date}"
+        "message": (
+            f"成功: Unreleased → [{version}] (日历版号)" if calendar_version
+            else f"成功: Unreleased → [{version}] - {release_date}"
+        ),
     }
 
 
