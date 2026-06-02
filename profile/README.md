@@ -1,9 +1,6 @@
 <div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="../images/wuji-logo-light.svg">
-    <source media="(prefers-color-scheme: light)" srcset="../images/wuji-logo-dark.svg">
-    <img src="../images/wuji-logo-dark.svg" height="80" alt="Wuji Technology">
-  </picture>
+  <img src="../images/wuji-logo-light.svg#gh-dark-mode-only" height="80" alt="Wuji Technology">
+  <img src="../images/wuji-logo-dark.svg#gh-light-mode-only" height="80" alt="Wuji Technology">
 </div>
 <br>
 
