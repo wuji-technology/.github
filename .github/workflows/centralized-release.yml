@@ -149,10 +149,20 @@ jobs:
             echo "ℹ️ 未发现 .release.yml，跳过版本号更新"
           fi
 
+      - name: Sync Wuji Studio version files
+        if: ${{ !inputs.dry_run && matrix.repo == 'wuji-studio-dev' }}
+        working-directory: target-repo
+        env:
+          VERSION: ${{ matrix.version }}
+        run: |
+          node scripts/sync-version.mjs --version "$VERSION"
+          node scripts/sync-version.mjs --version "$VERSION" --check
+
       - name: Create release branch
         if: ${{ !inputs.dry_run }}
         working-directory: target-repo
         env:
+          REPO_NAME: ${{ matrix.repo }}
           VERSION: ${{ matrix.version }}
         run: |
           git config user.name "github-actions[bot]"
@@ -174,6 +184,15 @@ jobs:
           " | while read -r vfile; do
               [ -f "$vfile" ] && git add "$vfile" && echo "  📦 Staged: $vfile"
             done
+          fi
+          if [ "$REPO_NAME" = "wuji-studio-dev" ]; then
+            git add \
+              package.json \
+              packages/suite-tauri/package.json \
+              packages/suite-tauri/src-tauri/tauri.conf.json \
+              packages/suite-tauri/src-tauri/Cargo.toml \
+              packages/suite-tauri/src-tauri/Cargo.lock \
+              packages/suite-tauri/public/splashscreen.html
           fi
           git commit -m "release: v${VERSION}
 
