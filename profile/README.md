@@ -25,11 +25,11 @@
 <table>
   <tr>
     <td align="center" width="50%">
-      <a href="https://www.youtube.com/watch?v=LXVV-oErD8s">
-        <img src="../images/wuji-hand-video.jpg" width="100%" alt="Wuji Hand">
+      <a href="https://www.youtube.com/watch?v=7QYedp3ozjw">
+        <img src="../images/wuji-hand-video.jpg" width="100%" alt="Wuji Hand 2 (Beta 1)">
       </a>
       <br>
-      <h3>Wuji Hand</h3>
+      <h3>Wuji Hand 2 (Beta 1)</h3>
       20-DOF dexterous hand with tactile sensing and FOC control<br><br>
       <a href="https://docs.wuji.tech/docs/en/wuji-hand/latest">Docs →</a>
     </td>
