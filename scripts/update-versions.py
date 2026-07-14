@@ -128,29 +128,33 @@ def update_versions(config_path, version, dry_run=False):
             }
 
     # 阶段 1：预读并生成所有替换结果，遇错立即返回（无副作用）
-    pending_writes = []  # list of (file_path, new_content, entry_path)
+    # 同一文件的多条规则在内存中累积应用（每个文件只读一次、阶段 2 只写一次），
+    # 否则后一条规则会基于原始内容覆盖掉前一条的替换结果
+    file_contents = {}  # file_path -> 累积应用替换后的内容
     config_dir = config_file.parent
 
     for entry in version_files:
         file_path = config_dir / entry['path']
         pattern = entry['pattern']
 
-        if not file_path.exists():
-            return {
-                "success": False,
-                "message": f"文件不存在: {entry['path']}",
-                "updated": [],
-            }
+        if file_path not in file_contents:
+            if not file_path.exists():
+                return {
+                    "success": False,
+                    "message": f"文件不存在: {entry['path']}",
+                    "updated": [],
+                }
 
-        try:
-            content = file_path.read_text(encoding='utf-8')
-        except OSError as e:
-            return {
-                "success": False,
-                "message": f"读取文件失败 ({entry['path']}): {e}",
-                "updated": [],
-            }
+            try:
+                file_contents[file_path] = file_path.read_text(encoding='utf-8')
+            except OSError as e:
+                return {
+                    "success": False,
+                    "message": f"读取文件失败 ({entry['path']}): {e}",
+                    "updated": [],
+                }
 
+        content = file_contents[file_path]
         replacement = rf'\g<1>{version}\g<2>'
         new_content, count = re.subn(
             pattern, replacement, content, count=1, flags=re.MULTILINE
@@ -163,31 +167,33 @@ def update_versions(config_path, version, dry_run=False):
                 "updated": [],
             }
 
+        file_contents[file_path] = new_content
+
         if dry_run:
             match = re.search(pattern, content, re.MULTILINE)
             old_line = match.group(0).strip() if match else "?"
             new_match = re.search(pattern, new_content, re.MULTILINE)
             new_line = new_match.group(0).strip() if new_match else "?"
             print(f"  📦 [DRY RUN] {entry['path']}: {old_line} → {new_line}")
-        else:
-            pending_writes.append((file_path, new_content, entry['path']))
 
     # 阶段 2：统一写入（仅 non-dry-run 且所有预检通过后执行）
     updated = []
-    for file_path, new_content, entry_path in pending_writes:
-        try:
-            file_path.write_text(new_content, encoding='utf-8')
-        except OSError as e:
-            return {
-                "success": False,
-                "message": f"写入文件失败 ({entry_path}): {e}",
-                "updated": updated,
-            }
-        print(f"  📦 已更新: {entry_path} → {version}")
-        updated.append(entry_path)
+    if not dry_run:
+        for file_path, new_content in file_contents.items():
+            entry_path = str(file_path.relative_to(config_dir))
+            try:
+                file_path.write_text(new_content, encoding='utf-8')
+            except OSError as e:
+                return {
+                    "success": False,
+                    "message": f"写入文件失败 ({entry_path}): {e}",
+                    "updated": updated,
+                }
+            print(f"  📦 已更新: {entry_path} → {version}")
+            updated.append(entry_path)
 
     if dry_run:
-        updated = [e['path'] for e in version_files]
+        updated = sorted({e['path'] for e in version_files})
 
     action = "预览" if dry_run else "更新"
     return {
