@@ -179,8 +179,9 @@ jobs:
           import yaml
           with open('.release.yml') as f:
               config = yaml.safe_load(f)
-          for entry in config.get('version_files', []):
-              print(entry['path'])
+          # 同一文件可配多条规则（如 Cargo.lock 多个 crate 条目），路径去重
+          for path in dict.fromkeys(e['path'] for e in config.get('version_files', [])):
+              print(path)
           " | while read -r vfile; do
               [ -f "$vfile" ] && git add "$vfile" && echo "  📦 Staged: $vfile"
             done
@@ -225,8 +226,8 @@ jobs:
           import yaml
           with open('.release.yml') as f:
               config = yaml.safe_load(f)
-          paths = [e['path'] for e in config.get('version_files', [])]
-          print(', '.join(f'`{p}`' for p in paths))
+          paths = dict.fromkeys(e['path'] for e in config.get('version_files', []))
+          print(', '.join(f'\`{p}\`' for p in paths))
           ")
             version_files_info=$'\n- 更新版本号文件: '"${vfiles}"
           fi
