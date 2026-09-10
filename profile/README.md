@@ -5,7 +5,7 @@
 <br>
 
 <p align="center">
-  We build high-DOF dexterous hands, data gloves, and a unified software stack<br>
+  We build high-DoF dexterous hands, data gloves, and a unified software stack<br>
   to accelerate dexterous manipulation and embodied AI.
 </p>
 
@@ -22,12 +22,12 @@
 <table>
   <tr>
     <td align="center" width="50%">
-      <a href="https://www.youtube.com/watch?v=LXVV-oErD8s">
-        <img src="../images/wuji-hand-video.jpg" width="100%" alt="Wuji Hand">
+      <a href="https://www.youtube.com/watch?v=7QYedp3ozjw">
+        <img src="../images/wuji-hand-video.jpg" width="100%" alt="Wuji Hand 2">
       </a>
       <br>
-      <h3>Wuji Hand</h3>
-      20-DOF dexterous hand with tactile sensing and FOC control<br><br>
+      <h3>Wuji Hand 2</h3>
+      20-DoF dexterous hand with back-drivable direct drive, FOC, and MIT force-position control<br><br>
       <a href="https://docs.wuji.tech/docs/en/wuji-hand/latest">Docs →</a>
     </td>
     <td align="center" width="50%">
@@ -42,14 +42,14 @@
   </tr>
   <tr>
     <td align="center" width="50%" height="120">
-      <h3>Wuji Studio</h3>
-      Desktop app for device management, data visualization, and firmware upgrade<br><br>
-      <a href="https://docs.wuji.tech/docs/en/wuji-studio/latest">Docs →</a>
+      <h3>Wuji SDK</h3>
+      Python and C SDK for device discovery, real-time data streaming, recording, and hand control<br><br>
+      <a href="https://docs.wuji.tech/docs/en/wuji-sdk/latest">Docs →</a>
     </td>
     <td align="center" width="50%" height="120">
-      <h3>Wuji SDK</h3>
-      Python SDK for sensor streaming, hand pose computation, and recording<br><br>
-      <a href="https://docs.wuji.tech/docs/en/wuji-sdk/latest">Docs →</a>
+      <h3>Wuji CLI</h3>
+      Command-line tool for device discovery, parameter access, diagnostics, and firmware upgrade<br><br>
+      <a href="https://docs.wuji.tech/docs/en/wuji-cli/latest">Docs →</a>
     </td>
   </tr>
 </table>
