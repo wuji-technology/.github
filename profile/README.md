@@ -8,7 +8,7 @@
 <br>
 
 <p align="center">
-  We build high-DOF dexterous hands, data gloves, and a unified software stack<br>
+  We build high-DoF dexterous hands, data gloves, and a unified software stack<br>
   to accelerate dexterous manipulation and embodied AI.
 </p>
 
@@ -30,7 +30,7 @@
       </a>
       <br>
       <h3>Wuji Hand 2</h3>
-      20-DOF dexterous hand with tactile sensing and FOC control<br><br>
+      20-DoF dexterous hand with back-drivable direct drive and FOC control<br><br>
       <a href="https://docs.wuji.tech/docs/en/wuji-hand/latest">Docs →</a>
     </td>
     <td align="center" width="50%">
@@ -46,7 +46,7 @@
   <tr>
     <td align="center" width="50%" height="120">
       <h3>Wuji SDK</h3>
-      Python SDK for sensor streaming, hand pose computation, and recording<br><br>
+      Python and C SDK for device discovery, real-time data streaming, recording, and hand control<br><br>
       <a href="https://docs.wuji.tech/docs/en/wuji-sdk/latest">Docs →</a>
     </td>
     <td align="center" width="50%" height="120">
