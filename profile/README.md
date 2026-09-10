@@ -42,14 +42,14 @@
   </tr>
   <tr>
     <td align="center" width="50%" height="120">
-      <h3>Wuji Studio</h3>
-      Desktop app for device management, data visualization, and firmware upgrade<br><br>
-      <a href="https://docs.wuji.tech/docs/en/wuji-studio/latest">Docs →</a>
-    </td>
-    <td align="center" width="50%" height="120">
       <h3>Wuji SDK</h3>
       Python SDK for sensor streaming, hand pose computation, and recording<br><br>
       <a href="https://docs.wuji.tech/docs/en/wuji-sdk/latest">Docs →</a>
+    </td>
+    <td align="center" width="50%" height="120">
+      <h3>Wuji CLI</h3>
+      Command-line tool for device discovery, parameter access, diagnostics, and firmware upgrade<br><br>
+      <a href="https://docs.wuji.tech/docs/en/wuji-cli/latest">Docs →</a>
     </td>
   </tr>
 </table>
