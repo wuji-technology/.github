@@ -21,7 +21,7 @@
 
 <table>
   <tr>
-    <td align="center" width="50%">
+    <td align="center" valign="top" width="50%">
       <a href="https://www.youtube.com/watch?v=7QYedp3ozjw">
         <img src="../images/wuji-hand-video.jpg" width="100%" alt="Wuji Hand 2">
       </a>
@@ -30,7 +30,7 @@
       20-DoF dexterous hand with back-drivable direct drive, FOC, and MIT force-position control<br><br>
       <a href="https://docs.wuji.tech/docs/en/wuji-hand/latest">Docs →</a>
     </td>
-    <td align="center" width="50%">
+    <td align="center" valign="top" width="50%">
       <a href="https://www.youtube.com/watch?v=NE5FytzRz_E">
         <img src="../images/wuji-glove-video.jpg" width="100%" alt="Wuji Glove">
       </a>
