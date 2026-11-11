@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Removed
 
 - Remove unused `prerelease` input parameter from `auto-release` action
+- Remove the `auto-release` action and the release automation workflows and scripts. Workflows that reference the action at `@main` should pin commit `8145fcb249133a6fa6777454eb0d61f1ca169843`
 
 ### Fixed
 
