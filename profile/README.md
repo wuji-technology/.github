@@ -5,8 +5,9 @@
 <br>
 
 <p align="center">
-  We build high-DoF dexterous hands, data gloves, and a unified software stack<br>
-  to accelerate dexterous manipulation and embodied AI.
+  <strong>A World-Leading Provider of Universal Manipulation Solutions.</strong><br>
+  Wuji Tech leads in dexterous manipulation solutions — from motor to hand and data-collection,<br>
+  bringing dexterity to robots, accelerating physical AGI.
 </p>
 
 <p align="center">
